@@ -11,6 +11,7 @@ const fs = require('fs')
 
 const AuthRouterApi = require("./routes/api/AuthRouter")
 const NotificationRouter = require("./routes/api/NotificationRouter")
+const ProductRouter = require("./routes/api/ProductRouter")
 
 const app = express()
 const apiVersion = '/api/v1'
@@ -56,5 +57,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use(apiVersion, AuthRouterApi)
 app.use(apiVersion, NotificationRouter)
+app.use(apiVersion, ProductRouter)
 
 module.exports = app
