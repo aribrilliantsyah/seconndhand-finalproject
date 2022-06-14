@@ -28,7 +28,7 @@ class AuthController {
 
     let {email, password} = req.body
 
-    let user = await User.finOne({where: {email: email}})
+    let user = await User.findOne({where: {email: email}})
     if(!user?.email){
       return res.status(200).json({
         status: false,
