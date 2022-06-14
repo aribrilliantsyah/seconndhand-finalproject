@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       title: {
         type: Sequelize.STRING
@@ -18,6 +24,9 @@ module.exports = {
         type: Sequelize.TEXT
       },
       path: {
+        type: Sequelize.STRING
+      },
+      image: {
         type: Sequelize.STRING
       },
       createdBy: {

@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user'
+      })
+      this.belongsTo(models.City, {
+        foreignKey: 'city_id',
+        as: 'city'
+      })
     }
   }
   Biodata.init({
