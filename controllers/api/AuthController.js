@@ -23,7 +23,7 @@ class AuthController {
       password: 'required' 
     }
 
-    let validation = new Validator(req.body, rules);
+    let validation = new Validator(req.body, rules)
     if(validation.fails()){
       return res.status(422).json({
         status: false,
@@ -69,7 +69,7 @@ class AuthController {
       password: 'required|min:7',
     }
 
-    let validation = new Validator(req.body, rules);
+    let validation = new Validator(req.body, rules)
     if(validation.fails()){
       return res.status(422).json({
         status: false,
@@ -123,7 +123,7 @@ class AuthController {
       email: 'required|email'
     }
 
-    let validation = new Validator(req.body, rules);
+    let validation = new Validator(req.body, rules)
     if(validation.fails()){
       return res.status(422).json({
         status: false,
@@ -168,7 +168,7 @@ class AuthController {
       otp: 'required|min:6|max:6',
     }
 
-    let validation = new Validator(req.body, rules);
+    let validation = new Validator(req.body, rules)
     if(validation.fails()){
       return res.status(422).json({
         status: false,
@@ -211,7 +211,40 @@ class AuthController {
   }
 
   async change_password(req, res){
+    let rules = {
+      uid: 'required',
+      password: 'required|min:7',
+    }
+
+    let validation = new Validator(req.body, rules)
+    if(validation.fails()){
+      return res.status(422).json({
+        status: false,
+        message: 'The form is not complete',
+        data: validation.errors.all()
+      })
+    }
+
+    let {uid, password} = req.body
+    let user = await User.findOne({where: {uuid: uid}})
+
+    if(!user?.email){
+      return res.status(200).json({
+        status: false,
+        message: 'User not found'
+      })
+    }
     
+    await User.update({password: bcrypt.hashSync(password, salt)}, {
+      where: {
+        id: user.id
+      }
+    })
+
+    return res.status(200).json({
+      status: true,
+      message: 'Password Changed',
+    })
   }
 }
 
