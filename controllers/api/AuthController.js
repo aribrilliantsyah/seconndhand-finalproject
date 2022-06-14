@@ -43,7 +43,7 @@ class AuthController {
       })
     }
 
-    let token = jwt.sign({id: user_game?.id, email: email}, privateKey, { expiresIn: '1d'})
+    let token = jwt.sign({id: user?.uid, email: email}, privateKey, { expiresIn: '1d'})
     await User.update({token: token}, {where: {id: user.id}})
 
     return res.status(200).json({
