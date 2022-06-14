@@ -11,6 +11,12 @@ const Validator = require('validatorjs')
 
 class AuthController {
   
+  constructor(){
+    this.mailer = new Mailer({
+      from: process.env.MAIL_SENDER
+    })
+  }
+
   async login(req, res) {
     let rules = {
       email: 'required|email',
@@ -60,7 +66,7 @@ class AuthController {
     let rules = {
       name: 'required',
       email: 'required|email',
-      password: 'required',
+      password: 'required|min:7',
     }
 
     let validation = new Validator(req.body, rules);
@@ -92,6 +98,15 @@ class AuthController {
       fullname: name,
       user_id: nUser.id
     })
+
+    new Mailer({
+      from: process.env.MAIL_SENDER
+    }).prepare({
+      to: email,
+      subject: 'Thank you 🎉',
+      text: `Thank you for registering in second-hand platform, ${name}`,
+      html: `<h1>Thank you for registering in second-hand platform ${name}</h1>`
+    }).send()
 
     return res.status(201).json({
       status: true,
