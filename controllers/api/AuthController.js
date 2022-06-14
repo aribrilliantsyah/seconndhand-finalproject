@@ -143,7 +143,7 @@ class AuthController {
   
     let otp = genOTP(6)
     await User.update({otp: otp}, {where: {id: user.id}})
-    
+
     new Mailer({
       from: process.env.MAIL_SENDER
     }).prepare({
@@ -163,7 +163,51 @@ class AuthController {
   }
 
   async verify_otp(req, res){
-    
+    let rules = {
+      email: 'required|email',
+      otp: 'required|min:6|max:6',
+    }
+
+    let validation = new Validator(req.body, rules);
+    if(validation.fails()){
+      return res.status(422).json({
+        status: false,
+        message: 'The form is not complete',
+        data: validation.errors.all()
+      })
+    }
+
+    let {otp, email} = req.body
+
+    let user = await User.findOne({where: {email: email }})
+
+    if(!user?.email){
+      return res.status(200).json({
+        status: false,
+        message: 'Email not found'
+      })
+    }
+
+    if(user.otp != otp){
+      return res.status(200).json({
+        status: false,
+        message: 'Invalid OTP',
+        data: {
+          match: false
+        }
+      })
+    }
+
+    await User.update({otp: null}, {where: {id: user.id}})
+
+    return res.status(200).json({
+      status: true,
+      message: 'OTP Match',
+      data: {
+        match: true,
+        uid: user.uuid
+      }
+    })
   }
 
   async change_password(req, res){
