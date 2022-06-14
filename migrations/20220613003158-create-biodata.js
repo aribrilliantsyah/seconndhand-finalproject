@@ -25,7 +25,7 @@ module.exports = {
       },
       city_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {        
           model: 'cities',
           key: 'id'

@@ -11,12 +11,6 @@ const Validator = require('validatorjs')
 
 class AuthController {
   
-  constructor(){
-    this.mailer = new Mailer({
-      from: process.env.MAIL_SENDER
-    })
-  }
-
   async login(req, res) {
     let rules = {
       email: 'required|email',
