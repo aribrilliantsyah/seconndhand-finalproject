@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user'
+      })
+      this.belongsTo(models.Product, {
+        foreignKey: 'product_id',
+        as: 'product'
+      })
     }
   }
   Whitelist.init({

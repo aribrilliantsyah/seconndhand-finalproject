@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       fullname: {
         type: Sequelize.STRING
@@ -18,7 +24,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       city_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'cities',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       address: {
         type: Sequelize.TEXT

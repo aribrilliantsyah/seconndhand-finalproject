@@ -9,7 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       product_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'products',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       bid_price: {
         type: Sequelize.DOUBLE
@@ -21,10 +27,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       seller_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       buyer_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       createdBy: {
         type: Sequelize.INTEGER

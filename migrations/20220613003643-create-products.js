@@ -15,7 +15,13 @@ module.exports = {
         type: Sequelize.DOUBLE
       },
       category_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'categories',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       published: {
         type: Sequelize.BOOLEAN
@@ -24,7 +30,13 @@ module.exports = {
         type: Sequelize.TEXT
       },
       seller_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       createdBy: {
         type: Sequelize.INTEGER

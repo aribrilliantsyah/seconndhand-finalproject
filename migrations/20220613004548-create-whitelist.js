@@ -9,10 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       product_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'products',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       user_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {        
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
       },
       createdBy: {
         type: Sequelize.INTEGER

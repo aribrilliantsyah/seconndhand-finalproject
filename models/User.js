@@ -11,6 +11,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.Biodata, {
+        foreignKey: 'user_id',
+        as: 'biodata'
+      })
+      this.hasMany(models.Product, {
+        foreignKey: 'seller_id',
+        as: 'products'
+      })
+      this.hasMany(models.Transaction, {
+        foreignKey: 'seller_id',
+        as: 'transaction_sellers'
+      })
+      this.hasMany(models.Transaction, {
+        foreignKey: 'buyer_id',
+        as: 'transaction_buyers'
+      })
+      this.hasMany(models.Notification, {
+        foreignKey: 'user_id',
+        as: 'notifications'
+      })
+      this.hasMany(models.Whitelist, {
+        foreignKey: 'user_id',
+        as: 'whitelist'
+      })
     }
   }
   User.init({
