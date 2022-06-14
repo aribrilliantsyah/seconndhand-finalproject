@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       })
       this.hasMany(models.Wishlist, {
         foreignKey: 'user_id',
-        as: 'whitelist'
+        as: 'wishlist'
       })
     }
   }

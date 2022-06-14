@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     updatedBy: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Whitelist',
-    tableName: 'whitelists',
+    modelName: 'Wishlist',
+    tableName: 'wishlists',
   });
   return Whitelist;
 };
