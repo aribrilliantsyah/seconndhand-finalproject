@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Category, {
-        foreignKey: 'category_id',
+        foreignKey: 'id',
         as: 'category'
       })
       this.belongsTo(models.User, {
         foreignKey: 'seller_id',
         as: 'user'
       })
-      this.hasMany(models.Whitelist, {
+      this.hasMany(models.Wishlist, {
         foreignKey: 'product_id',
         as: 'whitelist'
       })
