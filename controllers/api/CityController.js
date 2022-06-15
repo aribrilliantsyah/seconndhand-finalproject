@@ -21,7 +21,7 @@ class CityController {
 
   //read single
   async findByID(req, res){
-    let qRes = await Notification.findOne({
+    let qRes = await City.findOne({
       include: [
         {
           model: Biodata,
