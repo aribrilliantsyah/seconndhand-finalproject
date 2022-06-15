@@ -38,13 +38,13 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-     await queryInterface.bulkDelete('user_game', [
-      {
-        'username': 'adminganteng',
-      },
-      {
-        'username': 'member1',
-      }
-     ]);
+    //  await queryInterface.bulkDelete('user_game', [
+    //   {
+    //     'username': 'adminganteng',
+    //   },
+    //   {
+    //     'username': 'member1',
+    //   }
+    //  ]);
   }
 };
