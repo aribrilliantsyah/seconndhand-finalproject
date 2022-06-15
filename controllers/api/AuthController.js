@@ -25,7 +25,7 @@ class AuthController {
         data: validation.errors.all()
       })
     }
-
+  
     let {email, password} = req.body
 
     let user = await User.findOne({where: {email: email}})
