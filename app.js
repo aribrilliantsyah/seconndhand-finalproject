@@ -10,6 +10,7 @@ const YAML = require('yamljs')
 const fs = require('fs')
 
 const AuthRouterApi = require("./routes/api/AuthRouter")
+const NotificationRouter = require("./routes/api/NotificationRouter")
 
 const app = express()
 const apiVersion = '/api/v1'
@@ -54,5 +55,6 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use(apiVersion, AuthRouterApi)
+app.use(apiVersion, NotificationRouter)
 
 module.exports = app
