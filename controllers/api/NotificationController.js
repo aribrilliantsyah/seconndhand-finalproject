@@ -32,9 +32,7 @@ class NotificationController {
         })
       }
     }
-
-    console.log(qOrder)
-
+    
     if(!page){
       qRes = await Notification.findAll({
         include: [
