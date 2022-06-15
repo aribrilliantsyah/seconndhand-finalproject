@@ -1,4 +1,4 @@
-const { City, User } = require("../../models")
+const { City, Biodata } = require("../../models")
 const Validator = require('validatorjs')
 
 class CityController {
@@ -7,8 +7,8 @@ class CityController {
     let qRes = await City.findAll({
       include: [
         {
-          model: User,
-          as: 'user'
+          model: Biodata,
+          as: 'biodata'
         }
       ]
     })
@@ -24,8 +24,8 @@ class CityController {
     let qRes = await Notification.findOne({
       include: [
         {
-          model: User,
-          as: 'user'
+          model: Biodata,
+          as: 'biodata'
         }
       ],
       where: {id: req.params.id}
@@ -55,8 +55,8 @@ class CityController {
     
     let { city } = req.body
     
-    let user = await User.findOne({where: {id: user_id}})
-    if(!user?.email){
+    let biodata = await Biodata.findOne({where: {id: city_id}})
+    if(!biodata?.user_id){
       return res.status(200).json({
         status: false,
         message: 'User not found',
@@ -99,15 +99,15 @@ class CityController {
     let { city } = req.body
 
     let kota = await City.findOne({where: {id: req.params.id}})
-    if(!notification?.title){
+    if(!city?.city){
       return res.status(200).json({
         status: false,
         message: 'Data not found',
       })
     }
 
-    let user = await User.findOne({where: {id: user_id}})
-    if(!user?.email){
+    let biodata = await Biodata.findOne({where: {id: user_id}})
+    if(!biodata?.user_id){
       return res.status(200).json({
         status: false,
         message: 'User not found',
