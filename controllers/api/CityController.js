@@ -99,7 +99,7 @@ class CityController {
     let { city } = req.body
 
     let kota = await City.findOne({where: {id: req.params.id}})
-    if(!city?.city){
+    if(!kota?.city){
       return res.status(200).json({
         status: false,
         message: 'Data not found',
