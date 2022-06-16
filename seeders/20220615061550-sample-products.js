@@ -20,6 +20,8 @@ module.exports = {
         published: true,
         description: "Ini merupakan Product 1",
         seller_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         product: "Product 2",
@@ -28,6 +30,8 @@ module.exports = {
         published: true,
         description: "Ini merupakan Product 2",
         seller_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         product: "Product 3",
@@ -36,6 +40,8 @@ module.exports = {
         published: true,
         description: "Ini merupakan Product 3",
         seller_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         product: "Product 4",
@@ -44,6 +50,8 @@ module.exports = {
         published: true,
         description: "Ini merupakan Product 4",
         seller_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         product: "Product 5",
@@ -52,6 +60,8 @@ module.exports = {
         published: true,
         description: "Ini merupakan Product 5",
         seller_id: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
     ])
   },
