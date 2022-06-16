@@ -90,6 +90,7 @@ class ProductController {
 			published,
 			description,
 			seller_id,
+			createdBy: req.user.id
 		});
 
 		if (qRes?.id) {
@@ -159,6 +160,7 @@ class ProductController {
 			published,
 			description,
 			seller_id,
+			updatedBy: req.user.id
 		};
 
 		let qRes = await Product.update(data, {
