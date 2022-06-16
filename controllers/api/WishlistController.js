@@ -81,7 +81,8 @@ class WishlistController {
 
 		let qRes = await Wishlist.create({
 			product_id,
-			user_id
+			user_id,
+			createdBy: req.user.id
 		});
 
 		if (qRes?.id) {
