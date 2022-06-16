@@ -55,13 +55,6 @@ class CityController {
     
     let { city } = req.body
     
-    let biodata = await Biodata.findOne({where: {id: city_id}})
-    if(!biodata?.user_id){
-      return res.status(200).json({
-        status: false,
-        message: 'User not found',
-      })
-    }
 
     let qRes = await City.create({
       city: city
@@ -106,13 +99,7 @@ class CityController {
       })
     }
 
-    let biodata = await Biodata.findOne({where: {id: user_id}})
-    if(!biodata?.user_id){
-      return res.status(200).json({
-        status: false,
-        message: 'User not found',
-      })
-    }
+
 
     let data = {
       city: city

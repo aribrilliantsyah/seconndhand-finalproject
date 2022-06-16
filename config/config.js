@@ -1,7 +1,7 @@
 module.exports = {
     "development": {
         "username": "postgres",
-        "password": "postgres",
+        "password": "Annisa123",
         "database": "db_second_hand",
         "host": "localhost",
         "dialect": "postgres",
@@ -9,7 +9,7 @@ module.exports = {
     },
     "test": {
         "username": "postgres",
-        "password": "postgres",
+        "password": "Annisa123",
         "database": "db_second_hand",
         "host": "localhost",
         "dialect": "postgres",
