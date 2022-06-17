@@ -15,19 +15,33 @@ module.exports = {
      * }], {});
     */
 
-    // let defaultPass = bcrypt.hashSync('rahasia', salt);
-    // await queryInterface.bulkInsert('users', [
-    //   {
-    //     'uid': uuidv4(),
-    //     'email': 'admin@ch.com',
-    //     'username': 'adminganteng',
-    //     'password': defaultPass,
-    //     'token': '',
-    //     'role_id': 1,
-    //     'createdAt': new Date(),
-    //     'updatedAt': new Date(),
-    //   },
-    // ]);
+    let defaultPass = bcrypt.hashSync('rahasia', salt);
+    await queryInterface.bulkInsert('users', [
+      {
+        'uuid': uuidv4(),
+        'email': 'ariardiansyah101@gmail.com',
+        'password': defaultPass,
+        'oauth2': null,
+        'otp': null,
+        'token': null,
+        'createdBy': null,
+        'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+      {
+        'uuid': uuidv4(),
+        'email': 'anangbagus666@gmail.com',
+        'password': defaultPass,
+        'oauth2': null,
+        'otp': null,
+        'token': null,
+        'createdBy': null,
+        'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+    ]);
   },
 
   async down (queryInterface, Sequelize) {

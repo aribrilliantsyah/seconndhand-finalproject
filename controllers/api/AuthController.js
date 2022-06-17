@@ -25,7 +25,7 @@ class AuthController {
         data: validation.errors.all()
       })
     }
-
+  
     let {email, password} = req.body
 
     let user = await User.findOne({where: {email: email}})
@@ -43,7 +43,7 @@ class AuthController {
       })
     }
 
-    let token = jwt.sign({id: user.id, uid: user.uid, email: email}, privateKey, { expiresIn: '1d'})
+    let token = jwt.sign({id: user.id, uid: user.uid, email: user.email}, privateKey, { expiresIn: '1d'})
     await User.update({token: token}, {where: {id: user.id}})
 
     return res.status(200).json({
