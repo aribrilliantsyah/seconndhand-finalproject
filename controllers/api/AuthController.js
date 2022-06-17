@@ -25,25 +25,25 @@ class AuthController {
         data: validation.errors.all()
       })
     }
-
+  
     let {email, password} = req.body
 
     let user = await User.findOne({where: {email: email}})
-    if(!user?.email){
+    if(user == undefined){
       return res.status(200).json({
         status: false,
         message: 'Email not found'
       })
     }
 
-    if(!bcrypt.compareSync(password, user?.password)){
+    if(!bcrypt.compareSync(password, user.password)){
       return res.status(200).json({
         status: false,
         message: 'Invalid password'
       })
     }
 
-    let token = jwt.sign({id: user?.uid, email: email}, privateKey, { expiresIn: '1d'})
+    let token = jwt.sign({id: user.id, uid: user.uid, email: user.email}, privateKey, { expiresIn: '1d'})
     await User.update({token: token}, {where: {id: user.id}})
 
     return res.status(200).json({
@@ -75,7 +75,7 @@ class AuthController {
     let {email, name, password} = req.body
 
     let user = await User.findOne({where: {email: email}})
-    if(user?.email){
+    if(user != undefined && user.email){
       return res.status(200).json({
         status: false,
         message: 'Email already used'
@@ -128,7 +128,7 @@ class AuthController {
 
     let { email } = req.body
     let user = await User.findOne({where: {email: email }})
-    if(!user?.email){
+    if(user == undefined){
       return res.status(200).json({
         status: false,
         message: 'Email not found'
@@ -175,7 +175,7 @@ class AuthController {
 
     let user = await User.findOne({where: {email: email }})
 
-    if(!user?.email){
+    if(user == undefined){
       return res.status(200).json({
         status: false,
         message: 'Email not found'
@@ -222,7 +222,7 @@ class AuthController {
     let {uid, password} = req.body
     let user = await User.findOne({where: {uuid: uid}})
 
-    if(!user?.email){
+    if(user == undefined){
       return res.status(200).json({
         status: false,
         message: 'User not found'

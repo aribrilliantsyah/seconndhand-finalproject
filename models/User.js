@@ -31,9 +31,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'notifications'
       })
-      this.hasMany(models.Whitelist, {
+      this.hasMany(models.Wishlist, {
         foreignKey: 'user_id',
-        as: 'whitelist'
+        as: 'wishlist'
       })
     }
   }
