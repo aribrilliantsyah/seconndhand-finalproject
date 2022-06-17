@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'seller_id',
         as: 'user'
       })
-      this.hasMany(models.Whitelist, {
+      this.hasMany(models.Wishlist, {
         foreignKey: 'product_id',
-        as: 'whitelist'
+        as: 'wishlist'
       })
       this.hasMany(models.ProductPicture, {
         foreignKey: 'product_id',
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     product: DataTypes.STRING,
     price: DataTypes.DOUBLE,
-    category_id: DataTypes.STRING,
+    category_id: DataTypes.INTEGER,
     published: DataTypes.BOOLEAN,
     description: DataTypes.TEXT,
     seller_id: DataTypes.INTEGER,
