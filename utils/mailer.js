@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 
-class Mailer {
+class mailer {
   constructor(params) {
-    this.from = params?.from;
+    this.from = params.from;
     this.transport = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -15,10 +15,10 @@ class Mailer {
   prepare(params){
     this.mail = {
       from: this.from,
-      to: params?.to,
-      subject: params?.subject,
-      text: params?.text,
-      html: params?.html
+      to: params.to,
+      subject: params.subject,
+      text: params.text,
+      html: params.html
     }
     return this
   }
@@ -29,4 +29,4 @@ class Mailer {
 
 }
 
-module.exports = Mailer
+module.exports = mailer
