@@ -4,7 +4,7 @@ const privateKey = process.env.JWT_PRIVATE_KEY
 class Middleware {
 
   static verifyJwt(req, res, next){
-    const authHeader = req?.headers['authorization']
+    const authHeader = req.headers['authorization']
     if(!authHeader){
       return res.status(401).json({
         status: false,
