@@ -260,6 +260,78 @@ class ProductController {
 			message: "Delete Failed",
 		});
 	}
+
+	//upload gambar
+	async uploadPics(req, res) {
+		if(req?.files == undefined){
+			return res.status(200).json({
+				'message': 'Picture(s) Required'
+			})
+		}
+		let id = req.params.id
+
+		const checkBefore = (id, success) => {
+			Product.findOne({where: {id: id }}).then((product) => {
+				if(!product){
+					return res.status(200).json({
+						'message': 'Product not found',
+					})
+				}
+				return success(product)
+			})
+		} 
+		
+		checkBefore(id, async (data) => {
+			let qRes = []
+			for(let i = 0; i < req.files.length; i++){
+				qRes[i] = await ProductPicture.create({
+					product_id: id,
+					picture: req.files[i].filename,
+					createdBy: data.seller_id
+				})
+			}
+
+			if (qRes) {
+				return res.status(201).json({
+					status: true,
+					message: "Create Successfully",
+					data: qRes,
+				});
+			}
+	
+			return res.status(200).json({
+				status: false,
+				message: "Create Failed",
+			});
+		})
+	}
+
+	//delete gambar
+	async deletePics(req, res) {
+		let productPics = await ProductPicture.findAll({where: {product_id: req.params.product_id}});
+		if (productPics.length == 0) {
+			return res.status(200).json({
+				status: false,
+				message: "Data not found",
+			});
+		}
+
+		let qRes = await ProductPicture.destroy({
+			where: {product_id: req.params.product_id},
+		});
+
+		if (qRes) {
+			return res.status(200).json({
+				status: true,
+				message: "Delete Successfully",
+			});
+		}
+
+		return res.status(200).json({
+			status: false,
+			message: "Delete Failed",
+		});
+	}
 }
 
 module.exports = ProductController;
