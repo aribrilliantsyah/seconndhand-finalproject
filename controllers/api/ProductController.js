@@ -2,6 +2,7 @@ const { Product, User, Category, ProductPicture } = require("../../models");
 const Validator = require("validatorjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
+const fs = require('fs')
 
 class ProductController {
 	//read all
@@ -40,6 +41,10 @@ class ProductController {
 						as: 'category'
 					},
 					{
+						model: ProductPicture,
+						as: 'product_pictures'
+					},
+					{
 						model: User,
 						as: "user",
 						attributes: ['id', 'uuid', 'email']
@@ -56,6 +61,10 @@ class ProductController {
 					{
 						model: Category,
 						as: 'category'
+					},
+					{
+						model: ProductPicture,
+						as: 'product_pictures'
 					},
 					{
 						model: User,
@@ -83,6 +92,10 @@ class ProductController {
 					as: 'category'
 				},
 				{
+					model: ProductPicture,
+					as: 'product_pictures'
+				},
+				{
 					model: User,
 					as: "user",
 				},
@@ -102,8 +115,9 @@ class ProductController {
 			product: "required",
 			price: "required",
 			category_id: "required",
-			published: "required",
 			description: "required",
+			status: "required",
+			pictures: "required",
 		};
 
 		let validation = new Validator(req.body, rules);
@@ -115,7 +129,7 @@ class ProductController {
 			});
 		}
 
-		let { product, price, category_id, published, description, seller_id } = req.body;
+		let { product, price, category_id, description, seller_id, status, pictures } = req.body;
 
 		let category = await Category.findOne({where: {id: category_id}});
 		if (!category?.category) {
@@ -139,17 +153,27 @@ class ProductController {
 			product,
 			price,
 			category_id,
-			published,
 			description,
 			seller_id: seller_id?seller_id:req.user.id,
+			status,
 			createdBy: req.user.id
 		});
 
+		let picsRes = []
 		if (qRes?.id) {
+			if(pictures.length > 0){
+				for(let i = 0; i < pictures.length; i++){
+					picsRes[i] = await ProductPicture.create({
+						product_id: qRes.id,
+						picture: req.body.pictures[i],
+						createdBy: req.user.id
+					})
+				}
+			}
 			return res.status(201).json({
 				status: true,
 				message: "Create Successfully",
-				data: qRes,
+				data: {qRes, picsRes},
 			});
 		}
 
@@ -165,8 +189,9 @@ class ProductController {
 			product: "required",
 			price: "required",
 			category_id: "required",
-			published: "required",
 			description: "required",
+			status: "required",
+			pictures: "required"
 		};
 
 		let validation = new Validator(req.body, rules);
@@ -178,7 +203,7 @@ class ProductController {
 			});
 		}
 
-		let { product, price, category_id, published, description, seller_id } = req.body;
+		let { product, price, category_id, published, description, seller_id, pictures } = req.body;
 
 		let itemProduct = await Product.findOne({where: {id: req.params.id}});
 		if (!itemProduct?.product) {
@@ -203,6 +228,46 @@ class ProductController {
 					status: false,
 					message: "User not found",
 				});
+			}
+		}
+
+		let productPics = await ProductPicture.findAll({where: {product_id: req.params.id}})
+		let del_id = []
+		for(let i = 0; i < productPics.length; i++){
+			if(pictures.includes(productPics[i].picture)){
+				pictures = pictures.filter((item) => item != productPics[i].picture)
+			}else{
+				del_id.push(productPics[i].id)
+			}
+		}
+
+		let picsRes = []
+		if(pictures.length > 0){
+			for(let i = 0; i < pictures.length; i++){
+				picsRes[i] = await ProductPicture.create({
+					product_id: req.params.id,
+					picture: pictures[i],
+					createdBy: req.user.id
+				})
+			}
+		}
+
+		for(let i = 0; i < del_id.length; i++){
+			for(let j = 0; j < productPics.length; j++){
+				if(productPics[j]?.id == del_id[i]){
+					try {
+						let _path = `./${productPics[j]?.picture}`
+						if(fs.existsSync(_path)){
+							fs.unlinkSync(_path)
+						}
+					} catch(err) {
+						return res.status(500).json({
+							message: 'Process Error'
+						})
+					}
+
+					await ProductPicture.destroy({where: {id: del_id[i]}});
+				}
 			}
 		}
 
@@ -236,17 +301,35 @@ class ProductController {
 
 	//delete
 	async delete(req, res) {
-		let product = await Product.findOne({where: {id: req.params.id}});
-		if (!product?.product) {
+		let query = {where: {id: req.params.id}}
+		let product = await Product.findOne(query);
+		if(!product?.product) {
 			return res.status(200).json({
 				status: false,
 				message: "Data not found",
 			});
 		}
 
-		let qRes = await Product.destroy({
-			where: {id: req.params.id},
-		});
+		let productPics = await ProductPicture.findAll({where: {product_id: product.id}})
+		if(!productPics?.length == 0){
+			for(let i = 0; i < productPics?.length; i++){
+				if(productPics[i]?.picture){
+					try {
+						let _path = `./${productPics[i]?.picture}`
+						if(fs.existsSync(_path)){
+							fs.unlinkSync(_path)
+						}
+					} catch(err) {
+						return res.status(500).json({
+							message: 'Process Error'
+						})
+					}
+				}
+				await ProductPicture.destroy({where: {id: productPics[i].id}})
+			}
+		}
+
+		let qRes = await Product.destroy(query);
 
 		if (qRes) {
 			return res.status(200).json({
@@ -265,60 +348,42 @@ class ProductController {
 	async uploadPics(req, res) {
 		if(req?.files == undefined){
 			return res.status(200).json({
-				'message': 'Picture(s) Required'
+				status: false,
+				message: 'Picture(s) Required'
 			})
 		}
-		let id = req.params.id
 
-		const checkBefore = (id, success) => {
-			Product.findOne({where: {id: id }}).then((product) => {
-				if(!product){
-					return res.status(200).json({
-						'message': 'Product not found',
-					})
-				}
-				return success(product)
-			})
-		} 
-		
-		checkBefore(id, async (data) => {
-			let qRes = []
-			for(let i = 0; i < req.files.length; i++){
-				qRes[i] = await ProductPicture.create({
-					product_id: id,
-					picture: req.files[i].filename,
-					createdBy: data.seller_id
-				})
-			}
-
-			if (qRes) {
-				return res.status(201).json({
-					status: true,
-					message: "Create Successfully",
-					data: qRes,
-				});
-			}
-	
-			return res.status(200).json({
-				status: false,
-				message: "Create Failed",
-			});
-		})
+		return res.status(200).json({
+			status: true,
+			message: req.files,
+		});
 	}
 
 	//delete gambar
 	async deletePics(req, res) {
-		let productPics = await ProductPicture.findAll({where: {product_id: req.params.product_id}});
-		if (productPics.length == 0) {
+		let query = {where: {id: req.params.id}}
+		let productPics = await ProductPicture.findOne(query);
+		if(!productPics?.picture) {
 			return res.status(200).json({
 				status: false,
 				message: "Data not found",
 			});
 		}
 
-		let qRes = await ProductPicture.destroy({
-			where: {product_id: req.params.product_id},
-		});
+		if(productPics?.picture){
+			try {
+				let _path = `./${productPics?.picture}`
+				if(fs.existsSync(_path)){
+					fs.unlinkSync(_path)
+				}
+			} catch(err) {
+				return res.status(500).json({
+					message: 'Process Error'
+				})
+			}
+		}
+
+		let qRes = await ProductPicture.destroy(query);
 
 		if (qRes) {
 			return res.status(200).json({
