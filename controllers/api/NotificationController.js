@@ -1,17 +1,65 @@
 const { Notification, User } = require("../../models")
 const Validator = require('validatorjs')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
 
 class NotificationController {
   //read all
   async getAll(req, res){
-    let qRes = await Notification.findAll({
-      include: [
-        {
-          model: User,
-          as: 'user'
-        }
-      ]
-    })
+    let qRes = [];
+    let page = req.query.page
+    let limit = req.query.limit || 10
+    let offset = (page - 1) * limit
+    
+    let qWhere = {}
+    if(req.query.user_id != undefined) qWhere.user_id = req.query.user_id
+    if(req.query.title) qWhere.title = { [Op.like]: `%${req.query.title}%`}  
+    
+    let qOrder = []
+    if(req.query.order != undefined){
+      let order = req.query.order
+      order = order.split(',')
+      if(order.length > 0){
+        order.forEach((element, i) => {
+          let column = element.split(':')
+          if(column.length > 0){
+            if(column[1] == 'ASC' || column[1] == 'DESC'){
+              qOrder[i] = [
+                column[0], column[1]
+              ]
+            }
+          }
+        })
+      }
+    }
+    
+    if(!page){
+      qRes = await Notification.findAll({
+        include: [
+          {
+            model: User,
+            as: 'user',   
+            attributes: ['id', 'uuid', 'email']
+          }
+        ],
+        order: qOrder,
+        where: qWhere
+      })
+    }else{
+      qRes = await Notification.findAll({
+        offset: offset,
+        limit: limit,
+        include: [
+          {
+            model: User,
+            as: 'user',   
+            attributes: ['id', 'uuid', 'email']
+          }
+        ],
+        order: qOrder,
+        where: qWhere
+      })
+    }
 
     return res.status(200).json({
       status: true,
@@ -25,7 +73,8 @@ class NotificationController {
       include: [
         {
           model: User,
-          as: 'user'
+          as: 'user',   
+          attributes: ['id', 'uuid', 'email']
         }
       ],
       where: {id: req.params.id}
@@ -72,7 +121,8 @@ class NotificationController {
       title: title,
       message: message,
       path: path,
-      image: image
+      image: image,
+      createdBy: req.user.id
     })
 
     if(qRes?.id) {
@@ -131,7 +181,8 @@ class NotificationController {
       title: title,
       message: message,
       path: path,
-      image: image
+      image: image,
+      updateBy: req.user.id
     }
 
     let qRes = await Notification.update(data, {

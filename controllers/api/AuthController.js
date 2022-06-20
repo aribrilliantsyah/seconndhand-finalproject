@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const moment = require('moment')
 const privateKey = process.env.JWT_PRIVATE_KEY
 const { v4: uuidv4 } = require('uuid')
-const Mailer = require("../../utils/mailer")
+const Mailer = require("../../utils/Mailer")
 const { genOTP } = require("../../utils/otp")
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
@@ -25,7 +25,7 @@ class AuthController {
         data: validation.errors.all()
       })
     }
-
+  
     let {email, password} = req.body
 
     let user = await User.findOne({where: {email: email}})

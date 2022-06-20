@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'seller_id',
         as: 'user'
       })
-      this.hasMany(models.Whitelist, {
+      this.hasMany(models.Wishlist, {
         foreignKey: 'product_id',
-        as: 'whitelist'
+        as: 'wishlist'
       })
       this.hasMany(models.ProductPicture, {
         foreignKey: 'product_id',
@@ -33,13 +33,15 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   }
+
+  //status: 0 = draf, 1 = published, 2 = bid, 3 = sold
   Product.init({
     product: DataTypes.STRING,
     price: DataTypes.DOUBLE,
-    category_id: DataTypes.STRING,
-    published: DataTypes.BOOLEAN,
+    category_id: DataTypes.INTEGER,
     description: DataTypes.TEXT,
     seller_id: DataTypes.INTEGER,
+    status: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER
   }, {
