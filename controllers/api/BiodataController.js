@@ -1,7 +1,6 @@
 const { Biodata, User, City } = require("../../models")
 const Validator = require('validatorjs')
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op
+const fs = require('fs')
 
 class BiodataController {
   //read single
@@ -27,7 +26,7 @@ class BiodataController {
   async update(req, res){
     let rules = {
       fullname: 'required',
-      profile_picture: 'required', 
+      // profile_picture: 'required', 
       city_id: 'required',
       number_phone: 'required',
     }
@@ -40,15 +39,31 @@ class BiodataController {
         data: validation.errors.all()
       })
     }
+    let { fullname, city_id, address, number_phone } = req.body
     
-    let { fullname, profile_picture, city_id, address, number_phone } = req.body
-
     let biodata = await Biodata.findOne({where: {user_id: req.params.user_id}})
     if(!biodata?.fullname){
       return res.status(200).json({
         status: false,
         message: 'Data not found',
       })
+    }
+
+    let profile_picture = biodata.profile_picture;
+    if(req?.body?.profile_picture){
+      try {
+        if(biodata?.profile_picture != 'uploads/profile/default.png'){
+          let _path = `./${biodata?.profile_picture}`
+          if(fs.existsSync(_path)){
+            fs.unlinkSync(_path)
+          }
+          profile_picture = req?.body?.profile_picture
+        }
+      } catch(err) {
+        return res.status(500).json({
+          message: 'Process Error'
+        })
+      }
     }
 
     let city = await City.findOne({where: {id: city_id}})
@@ -84,6 +99,20 @@ class BiodataController {
       status: false,
       message: 'Update Failed',
     })
+  }
+
+  async uploadProfilePicture(req, res){
+    if(req?.file == undefined){
+			return res.status(200).json({
+				status: false,
+				message: 'Profile Picture Required'
+			})
+		}
+
+		return res.status(200).json({
+			status: true,
+			message: req.file,
+		});
   }
 }
 
