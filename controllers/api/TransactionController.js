@@ -1,6 +1,6 @@
-const { Transaction, User, Product, ProductPicture } = require("../../models")
+const { Transaction, User, Product, ProductPicture, Notification, Biodata, sequelize } = require("../../models")
 const Validator = require('validatorjs')
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 class TransactionController {
@@ -44,12 +44,26 @@ class TransactionController {
           {
             model: User,
             as: 'buyer',   
-            attributes: ['id', 'uuid', 'email']
+            attributes: ['id', 'uuid', 'email'],
+            include: [
+              {
+                model: Biodata,
+                as: 'biodata',
+                attributes: ['fullname', 'profile_picture', 'number_phone']
+              }
+            ]
           },
           {
             model: User,
             as: 'seller',   
-            attributes: ['id', 'uuid', 'email']
+            attributes: ['id', 'uuid', 'email'],
+            include: [
+              {
+                model: Biodata,
+                as: 'biodata',
+                attributes: ['fullname', 'profile_picture', 'number_phone']
+              }
+            ]
           },
           {
             model: Product,
@@ -58,9 +72,9 @@ class TransactionController {
             where: qWhereProduct,
             include: [
               {
-                product: ProductPicture,
-                as: 'product',
-                attributes: ['id', 'pictures'],
+                model: ProductPicture,
+                as: 'product_pictures',
+                attributes: ['id', 'picture'],
               }
             ]
           },
@@ -76,12 +90,26 @@ class TransactionController {
           {
             model: User,
             as: 'buyer',   
-            attributes: ['id', 'uuid', 'email']
+            attributes: ['id', 'uuid', 'email'],
+            include: [
+              {
+                model: Biodata,
+                as: 'biodata',
+                attributes: ['fullname', 'profile_picture', 'number_phone']
+              }
+            ]
           },
           {
             model: User,
             as: 'seller',   
-            attributes: ['id', 'uuid', 'email']
+            attributes: ['id', 'uuid', 'email'],
+            include: [
+              {
+                model: Biodata,
+                as: 'biodata',
+                attributes: ['fullname', 'profile_picture', 'number_phone']
+              }
+            ]
           },
           {
             model: Product,
@@ -90,9 +118,9 @@ class TransactionController {
             where: qWhereProduct,
             include: [
               {
-                product: ProductPicture,
-                as: 'product',
-                attributes: ['id', 'pictures'],
+                model: ProductPicture,
+                as: 'product_pictures',
+                attributes: ['id', 'picture'],
               }
             ]
           },
@@ -115,12 +143,26 @@ class TransactionController {
         {
           model: User,
           as: 'buyer',   
-          attributes: ['id', 'uuid', 'email']
+          attributes: ['id', 'uuid', 'email'],
+          include: [
+            {
+              model: Biodata,
+              as: 'biodata',
+              attributes: ['fullname', 'profile_picture', 'number_phone']
+            }
+          ]
         },
         {
           model: User,
           as: 'seller',   
-          attributes: ['id', 'uuid', 'email']
+          attributes: ['id', 'uuid', 'email'],
+          include: [
+            {
+              model: Biodata,
+              as: 'biodata',
+              attributes: ['fullname', 'profile_picture', 'number_phone']
+            }
+          ]
         },
         {
           model: Product,
@@ -128,9 +170,9 @@ class TransactionController {
           attributes: ['id', 'product', 'price', 'category_id', 'status'],
           include: [
             {
-              product: ProductPicture,
-              as: 'product',
-              attributes: ['id', 'pictures'],
+              model: ProductPicture,
+              as: 'product_pictures',
+              attributes: ['id', 'picture'],
             }
           ]
         },
@@ -202,40 +244,273 @@ class TransactionController {
         updatedBy: req.user.id
       })
       
-      let product_picture = await PictureProduct.findOne({where: {product_id: product_id}})
+      let product_picture = await ProductPicture.findOne({where: {product_id: product_id}})
       await Notification.create({
-        'user_id': product.seller_id,
-        'title': 'Penawaran Produk',
-        'message': `${product?.product}\n Rp${product?.price}\n Ditawar Rp${bid_price}`,
-        'path': `transaction/${qRes.id}`,
-        'picture': `${product_picture?.picture}`
+        user_id: product.seller_id,
+        title: 'Penawaran produk',
+        message: `${product?.product}\n Rp${product?.price}\n Ditawar Rp${bid_price}`,
+        path: `transaction/${qRes.id}`,
+        image: `${product_picture?.picture}`
       })
 
       await t.commit();
       return res.status(201).json({
         status: true,
-        message: 'Create Successfully',
+        message: 'Bid Successfully',
         data: qRes
+      })
+    } catch (error) {
+      // console.log(error)
+      await t.rollback();   
+      return res.status(200).json({
+        status: false,
+        message: 'Bid Failed',
+      })
+    }
+  }
+
+  async sellerChangeStatusTransaction(req, res){
+    let rules = {
+      transaction_status: 'required|in:0,1,2',
+    }
+
+    let validation = new Validator(req.body, rules)
+    if(validation.fails()){
+      return res.status(422).json({
+        status: false,
+        message: 'The form is not complete',
+        data: validation.errors.all()
+      })
+    }
+    
+    let { transaction_status } = req.body
+    const t = await sequelize.transaction();
+    try {
+      let transaction = await Transaction.findOne({where: {id: req?.params.id}})
+
+      if(!transaction?.id){
+        return res.status(200).json({
+          status: false,
+          message: 'Transaction not found',
+        })
+      }
+
+      if(transaction?.bid_status != '1'){
+        return res.status(200).json({
+          status: false,
+          message: 'Bid status must be accepted/1',
+        })
+      }
+
+      let product = await Product.findOne({where: {id: transaction.product_id}})
+      if(!product?.id){
+        return res.status(200).json({
+          status: false,
+          message: 'Product not found',
+        })
+      }
+      
+      let product_picture = await ProductPicture.findOne({where: {product_id: transaction.product_id}})
+      let sStatus = 1
+      if(transaction_status == '0'){
+        sStatus = 2
+      }else if(transaction_status == '1'){
+        await Notification.create({
+          user_id: transaction.buyer_id,
+          title: 'Berhasil terbeli',
+          subtitle: '',
+          message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        await Notification.create({
+          user_id: transaction.seller_id,
+          title: 'Berhasil terjual',
+          subtitle: '',
+          message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        sStatus = 3
+      }else if(transaction_status == '2'){
+        await Notification.create({
+          user_id: transaction.buyer_id,
+          title: 'Transaksi dibatalkan penjual',
+          subtitle: '',
+          message: `${product?.product}\n Rp${product?.price} \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        await Notification.create({
+          user_id: transaction.seller_id,
+          title: 'Transaksi dibatalkan',
+          subtitle: '',
+          message: `${product?.product}\n Rp${product?.price} \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        sStatus = 1
+      }
+
+      await Product.update({status: sStatus}, {where: {id: product.id}})
+      await Transaction.update({transaction_status: transaction_status, transaction_status_at: new Date() }, {where: {id: req.params.id}})
+
+      await t.commit();
+      return res.status(201).json({
+        status: true,
+        message: 'Change Status Transaction Successfully',
       })
     } catch (error) {
       await t.rollback();   
       return res.status(200).json({
         status: false,
-        message: 'Create Failed',
+        message: 'Change Status Transaction Failed',
       })
     }
   }
 
   async sellerChangeStatusBid(req, res){
+    let rules = {
+      bid_status: 'required|in:0,1,2',
+    }
 
-  }
+    let validation = new Validator(req.body, rules)
+    if(validation.fails()){
+      return res.status(422).json({
+        status: false,
+        message: 'The form is not complete',
+        data: validation.errors.all()
+      })
+    }
+    
+    let { bid_status } = req.body
+    const t = await sequelize.transaction();
+    try {
+      let transaction = await Transaction.findOne({where: {id: req?.params.id}})
 
-  async sellerChangeStatusTransaction(req, res){
+      if(!transaction?.id){
+        return res.status(200).json({
+          status: false,
+          message: 'Transaction not found',
+        })
+      }
 
+      let product = await Product.findOne({where: {id: transaction.product_id}})
+      if(!product?.id){
+        return res.status(200).json({
+          status: false,
+          message: 'Product not found',
+        })
+      }
+      
+      let product_picture = await ProductPicture.findOne({where: {product_id: transaction.product_id}})
+      let sStatus = 1
+      if(bid_status == '0'){
+        await Notification.create({
+          user_id: transaction.seller_id,
+          title: 'Penawaran produk',
+          message: `${product?.product}\n Rp${product?.price}\n Ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        await Notification.create({
+          user_id: transaction.buyer_id,
+          title: 'Penawaran produk',
+          message: `${product?.product}\n Rp${product?.price}\n Menawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        sStatus = 2
+      }else if(bid_status == '1'){
+        await Notification.create({
+          user_id: transaction.buyer_id,
+          title: 'Penawaran produk',
+          subtitle: 'Kamu akan segera dihubungi penjual via whatsapp',
+          message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        await Notification.create({
+          user_id: transaction.seller_id,
+          title: 'Penawaran produk',
+          subtitle: 'Anda menyetujui penawaran',
+          message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        sStatus = 2
+      }else if(bid_status == '2'){
+        await Notification.create({
+          user_id: transaction.buyer_id,
+          title: 'Penawaran produk',
+          subtitle: 'Penawaran anda tidak disetujui penjual',
+          message: `${product?.product}\n Rp${product?.price} \n Gagal ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        await Notification.create({
+          user_id: transaction.seller_id,
+          title: 'Penawaran produk',
+          subtitle: 'Anda menolak penawaran',
+          message: `${product?.product}\n Rp${product?.price} \n Gagal ditawar Rp${transaction.bid_price}`,
+          path: `transaction/${transaction.id}`,
+          image: `${product_picture?.picture}`
+        })
+
+        sStatus = 1
+      }
+
+      await Product.update({status: sStatus}, {where: {id: product.id}})
+      await Transaction.update({bid_status: bid_status, bid_status_at: new Date() }, {where: {id: req.params.id}})
+
+      await t.commit();
+      return res.status(200).json({
+        status: true,
+        message: 'Change Status Bid Successfully',
+      })
+    } catch (error) {
+      // console.log(error)
+      await t.rollback();   
+      return res.status(200).json({
+        status: false,
+        message: 'Change Status Bid Failed',
+      })
+    }
   }
 
   async delete(req, res){
+    let transaction = await Transaction.findOne({where: {id: req.params.id}})
+    if(!transaction?.title){
+      return res.status(200).json({
+        status: false,
+        message: 'Data not found',
+      })
+    }
 
+    let qRes = await Transaction.destroy({
+      where: {id: req.params.id}
+    })
+
+    if(qRes){
+      return res.status(200).json({
+        status: true,
+        message: 'Delete Successfully',
+      })
+    }
+
+    return res.status(200).json({
+      status: false,
+      message: 'Delete Failed',
+    })
   }
 }
 

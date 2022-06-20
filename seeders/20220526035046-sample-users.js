@@ -16,6 +16,17 @@ module.exports = {
     */
 
     let defaultPass = bcrypt.hashSync('rahasia', salt);
+
+    await queryInterface.bulkInsert('cities', [
+      {
+        'city': 'Kota',
+        'createdBy': null,
+        'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      }
+    ]);
+
     await queryInterface.bulkInsert('users', [
       {
         'uuid': uuidv4(),
@@ -38,6 +49,25 @@ module.exports = {
         'token': null,
         'createdBy': null,
         'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+    ]);
+
+    await queryInterface.bulkInsert('biodata', [
+      {
+        'user_id': 1,
+        'fullname': 'Ari Ardiansyah',
+        'profile_picture': 'uploads/profile/default.png',
+        'city_id': 1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+      {
+        'user_id': 2,
+        'fullname': 'Anang Bagus',
+        'profile_picture': 'uploads/profile/default.png',
+        'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()
       },
