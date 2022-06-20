@@ -11,10 +11,14 @@ const fs = require('fs')
 
 const AuthRouterApi = require("./routes/api/AuthRouter")
 const NotificationRouter = require("./routes/api/NotificationRouter")
+
+const CityRouter = require("./routes/api/CityRouter")
+
 const ProductRouter = require("./routes/api/ProductRouter")
 const WishlistRouter = require("./routes/api/WishlistRouter")
 const TransactionRouter = require("./routes/api/TransactionRouter")
 const CategoryRouter = require("./routes/api/CategoryRouter")
+
 
 const app = express()
 const apiVersion = '/api/v1'
@@ -60,9 +64,13 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use(apiVersion, AuthRouterApi)
 app.use(apiVersion, NotificationRouter)
+
+app.use(apiVersion, CityRouter)
+
 app.use(apiVersion, ProductRouter)
 app.use(apiVersion, WishlistRouter)
 app.use(apiVersion, TransactionRouter)
 app.use(apiVersion, CategoryRouter)
+
 
 module.exports = app
