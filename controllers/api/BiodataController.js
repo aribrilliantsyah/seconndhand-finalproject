@@ -1,4 +1,4 @@
-const { Biodata, User } = require("../../models")
+const { Biodata, User, City } = require("../../models")
 const Validator = require('validatorjs')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -26,11 +26,10 @@ class BiodataController {
   //update
   async update(req, res){
     let rules = {
-      user_id: 'required',
-      title: 'required', 
-      message: 'required',
-      path: 'required',
-      image: 'required',
+      fullname: 'required',
+      profile_picture: 'required', 
+      city_id: 'required',
+      number_phone: 'required',
     }
 
     let validation = new Validator(req.body, rules)
@@ -66,7 +65,7 @@ class BiodataController {
       city_id: city_id,
       address: address,
       number_phone: number_phone,
-      updateBy: req.user.id
+      updatedBy: req.user.id
     }
 
     let qRes = await Biodata.update(data, {

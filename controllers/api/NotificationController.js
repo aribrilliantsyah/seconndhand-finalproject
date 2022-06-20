@@ -182,7 +182,7 @@ class NotificationController {
       message: message,
       path: path,
       image: image,
-      updateBy: req.user.id
+      updatedBy: req.user.id
     }
 
     let qRes = await Notification.update(data, {
