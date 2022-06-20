@@ -8,7 +8,7 @@ const multer = require('multer')
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, `./uploads/`)
+    cb(null, `./uploads/product/`)
   },
   filename: function (req, file, cb) {
     let ext = path.extname(file.originalname)
@@ -34,7 +34,7 @@ router.get(`/product/:id`, Middleware.verifyJwt, ctl.findByID)
 router.post(`/product`, Middleware.verifyJwt, ctl.create)
 router.put(`/product/:id`, Middleware.verifyJwt, ctl.update)
 router.delete(`/product/:id`, Middleware.verifyJwt, ctl.delete)
-router.post(`/product/upload-pics/:id`, upload.array('pictures', 4), Middleware.verifyJwt, ctl.uploadPics)
-router.delete(`/product/delete-pics/:product_id`, Middleware.verifyJwt, ctl.deletePics)
+router.post(`/product/upload-pics/`, upload.array('pictures', 4), Middleware.verifyJwt, ctl.uploadPics)
+router.delete(`/product/delete-pics/:id`, Middleware.verifyJwt, ctl.deletePics)
 
 module.exports = router
