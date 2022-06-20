@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-class mailer {
+class Mailer {
   constructor(params) {
     this.from = params.from;
     this.transport = nodemailer.createTransport({
@@ -29,4 +29,4 @@ class mailer {
 
 }
 
-module.exports = mailer
+module.exports = Mailer
