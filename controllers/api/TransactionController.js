@@ -160,66 +160,70 @@ class TransactionController {
         data: validation.errors.all()
       })
     }
-
     
     let { buyer_id, product_id, bid_price } = req.body
     
-    let buyer = await User.findOne({where: {id: buyer_id}})
-    if(!buyer?.email){
-      return res.status(200).json({
-        status: false,
-        message: 'User not found',
-      })
-    }
+    const t = await sequelize.transaction();
 
-    let product = await Product.findOne({where: {id: product_id}})
-    if(!product?.seller_id){
-      return res.status(200).json({
-        status: false,
-        message: 'Product not found',
-      })
-    }
-    
-    if(product?.seller_id == buyer_id){
-      return res.status(200).json({
-        status: false,
-        message: `Can't bid on your own product`,
-      })
-    }
+    try {
+      let buyer = await User.findOne({where: {id: buyer_id}})
+      if(!buyer?.email){
+        return res.status(200).json({
+          status: false,
+          message: 'User not found',
+        })
+      }
 
-    
-    let qRes = await Transaction.create({
-      product_id: product_id,
-      bid_price: bid_price,
-      bid_status: 0,
-      transaction_status: 0,
-      seller_id: product?.seller_id,
-      buyer_id: buyer_id,
-      createdBy: req.user.id,
-      updatedBy: req.user.id
-    })
-    
-    let product_picture = await PictureProduct.findOne({where: {product_id: product_id}})
-    await Notification.create({
-      'user_id': product.seller_id,
-      'title': 'Penawaran Produk',
-      'message': `${product?.product}\n Rp${product?.price}\n Ditawar Rp${bid_price}`,
-      'path': `transaction/${qRes.id}`,
-      'picture': `${product_picture?.picture}`
-    })
+      let product = await Product.findOne({where: {id: product_id}})
+      if(!product?.seller_id){
+        return res.status(200).json({
+          status: false,
+          message: 'Product not found',
+        })
+      }
+      
+      if(product?.seller_id == buyer_id){
+        return res.status(200).json({
+          status: false,
+          message: `Can't bid on your own product`,
+        })
+      }
+      
+      await Product.update({status: 2}, {where: {id: product.id}})
 
-    if(qRes?.id) {
+      let qRes = await Transaction.create({
+        product_id: product_id,
+        bid_price: bid_price,
+        bid_status: 0,
+        transaction_status: 0,
+        seller_id: product?.seller_id,
+        buyer_id: buyer_id,
+        createdBy: req.user.id,
+        updatedBy: req.user.id
+      })
+      
+      let product_picture = await PictureProduct.findOne({where: {product_id: product_id}})
+      await Notification.create({
+        'user_id': product.seller_id,
+        'title': 'Penawaran Produk',
+        'message': `${product?.product}\n Rp${product?.price}\n Ditawar Rp${bid_price}`,
+        'path': `transaction/${qRes.id}`,
+        'picture': `${product_picture?.picture}`
+      })
+
+      await t.commit();
       return res.status(201).json({
         status: true,
         message: 'Create Successfully',
         data: qRes
       })
+    } catch (error) {
+      await t.rollback();   
+      return res.status(200).json({
+        status: false,
+        message: 'Create Failed',
+      })
     }
-
-    return res.status(200).json({
-      status: false,
-      message: 'Create Failed',
-    })
   }
 
   async sellerChangeStatusBid(req, res){
