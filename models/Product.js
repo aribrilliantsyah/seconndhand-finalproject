@@ -33,6 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   }
+
+  //status: 0 = draf, 1 = published, 3 = bid, 2 = sold
   Product.init({
     product: DataTypes.STRING,
     price: DataTypes.DOUBLE,
@@ -40,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     published: DataTypes.BOOLEAN,
     description: DataTypes.TEXT,
     seller_id: DataTypes.INTEGER,
+    status: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER
   }, {

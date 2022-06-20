@@ -13,6 +13,7 @@ const AuthRouterApi = require("./routes/api/AuthRouter")
 const NotificationRouter = require("./routes/api/NotificationRouter")
 const ProductRouter = require("./routes/api/ProductRouter")
 const WishlistRouter = require("./routes/api/WishlistRouter")
+const TransactionRouter = require("./routes/api/TransactionRouter")
 
 const app = express()
 const apiVersion = '/api/v1'
@@ -60,5 +61,6 @@ app.use(apiVersion, AuthRouterApi)
 app.use(apiVersion, NotificationRouter)
 app.use(apiVersion, ProductRouter)
 app.use(apiVersion, WishlistRouter)
+app.use(apiVersion, TransactionRouter)
 
 module.exports = app

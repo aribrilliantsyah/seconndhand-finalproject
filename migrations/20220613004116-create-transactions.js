@@ -44,6 +44,12 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
+      bid_status_at: {
+        type: Sequelize.DATE
+      },
+      transaction_status_at: {
+        type: Sequelize.DATE
+      },
       createdBy: {
         type: Sequelize.INTEGER
       },

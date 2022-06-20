@@ -23,9 +23,6 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      published: {
-        type: Sequelize.BOOLEAN
-      },
       description: {
         type: Sequelize.TEXT
       },
@@ -37,6 +34,13 @@ module.exports = {
           key: 'id'
         },
         onDelete: 'CASCADE'
+      },
+      status: Sequelize.INTEGER,
+      bid_at: {
+        type: Sequelize.DATE
+      },
+      sold_at: {
+        type: Sequelize.DATE
       },
       createdBy: {
         type: Sequelize.INTEGER

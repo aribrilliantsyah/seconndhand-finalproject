@@ -32,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     transaction_status: DataTypes.INTEGER,
     seller_id: DataTypes.INTEGER,
     buyer_id: DataTypes.INTEGER,
+    bid_status_at: DataTypes.DATE,
+    transaction_status_at: DataTypes.DATE,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER
   }, {
