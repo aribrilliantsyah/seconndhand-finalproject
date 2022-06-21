@@ -99,7 +99,7 @@ class CategoryController {
 
     let data = {
       category: category,
-      updateBy: req.user.id,
+      updatedBy: req.user.id,
     };
 
     let qRes = await Category.update(data, {
