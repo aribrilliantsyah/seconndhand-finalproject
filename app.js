@@ -59,6 +59,16 @@ let log_name = '/logs/access_log_'+moment().format('YYYY_MM_DD')+'.log';
 // }))
 
 app.use(express.json())
+app.get('/', (req, res) => {
+    res.json({
+        status: true,
+        message: 'Hai',
+        data: {
+            version: 'v1',
+            path: 'v1/api'
+        }
+    })
+})
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 

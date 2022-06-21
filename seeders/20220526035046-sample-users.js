@@ -52,6 +52,30 @@ module.exports = {
         'createdAt': new Date(),
         'updatedAt': new Date()
       },
+      {
+        'uuid': uuidv4(),
+        'email': 'ester.yuliana11@gmail.com',
+        'password': defaultPass,
+        'oauth2': null,
+        'otp': null,
+        'token': null,
+        'createdBy': null,
+        'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+      {
+        'uuid': uuidv4(),
+        'email': 'aapriliani819@gmail.com',
+        'password': defaultPass,
+        'oauth2': null,
+        'otp': null,
+        'token': null,
+        'createdBy': null,
+        'updatedBy': null,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
     ]);
 
     await queryInterface.bulkInsert('biodata', [
@@ -66,6 +90,22 @@ module.exports = {
       {
         'user_id': 2,
         'fullname': 'Anang Bagus',
+        'profile_picture': 'uploads/profile/default.png',
+        'city_id': 1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+      {
+        'user_id': 3,
+        'fullname': 'Ester',
+        'profile_picture': 'uploads/profile/default.png',
+        'city_id': 1,
+        'createdAt': new Date(),
+        'updatedAt': new Date()
+      },
+      {
+        'user_id': 4,
+        'fullname': 'Anisa',
         'profile_picture': 'uploads/profile/default.png',
         'city_id': 1,
         'createdAt': new Date(),
