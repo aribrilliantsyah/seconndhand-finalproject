@@ -14,6 +14,9 @@ class ProductController {
 
 		let qWhere = {}
 		if(req.query.product) qWhere.product = { [Op.like]: `%${req.query.product}%`}
+		if(req.user){
+			if(req.user.id) qWhere.seller_id = { [Op.not]: req.user.id}
+		}
 
 		let qOrder = []
 		if(req.query.order != undefined){
