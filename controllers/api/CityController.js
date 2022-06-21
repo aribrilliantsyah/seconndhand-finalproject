@@ -54,10 +54,10 @@ class CityController {
 
     
     let { city } = req.body
-    
 
     let qRes = await City.create({
-      city: city
+      city: city,
+      createdBy: req.user.id
     })
 
     if(qRes?.id) {
@@ -100,7 +100,8 @@ class CityController {
     }
 
     let data = {
-      city: city
+      city: city,
+      updatedBy: req.user.id
     }
 
     let qRes = await City.update(data, {
