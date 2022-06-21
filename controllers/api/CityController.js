@@ -99,6 +99,8 @@ class CityController {
       })
     }
 
+
+
     let data = {
       city: city
     }
