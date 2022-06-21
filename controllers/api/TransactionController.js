@@ -231,7 +231,7 @@ class TransactionController {
         })
       }
       
-      await Product.update({status: 2, updatedBy: req.user.id}, {where: {id: product.id}})
+      await Product.update({status: 2}, {where: {id: product.id}})
 
       let qRes = await Transaction.create({
         product_id: product_id,
@@ -241,6 +241,7 @@ class TransactionController {
         seller_id: product?.seller_id,
         buyer_id: buyer_id,
         createdBy: req.user.id,
+        updatedBy: req.user.id
       })
       
       let product_picture = await ProductPicture.findOne({where: {product_id: product_id}})
@@ -249,8 +250,7 @@ class TransactionController {
         title: 'Penawaran produk',
         message: `${product?.product}\n Rp${product?.price}\n Ditawar Rp${bid_price}`,
         path: `transaction/${qRes.id}`,
-        image: `${product_picture?.picture}`,
-        createdBy: req.user.id
+        image: `${product_picture?.picture}`
       })
 
       await t.commit();
@@ -321,8 +321,7 @@ class TransactionController {
           subtitle: '',
           message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         await Notification.create({
@@ -331,8 +330,7 @@ class TransactionController {
           subtitle: '',
           message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         sStatus = 3
@@ -343,8 +341,7 @@ class TransactionController {
           subtitle: '',
           message: `${product?.product}\n Rp${product?.price} \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         await Notification.create({
@@ -353,15 +350,14 @@ class TransactionController {
           subtitle: '',
           message: `${product?.product}\n Rp${product?.price} \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         sStatus = 1
       }
 
-      await Product.update({status: sStatus, updatedBy: req.user.id}, {where: {id: product.id}})
-      await Transaction.update({transaction_status: transaction_status, transaction_status_at: new Date(), updatedBy: req.user.id }, {where: {id: req.params.id}})
+      await Product.update({status: sStatus}, {where: {id: product.id}})
+      await Transaction.update({transaction_status: transaction_status, transaction_status_at: new Date() }, {where: {id: req.params.id}})
 
       await t.commit();
       return res.status(201).json({
@@ -419,8 +415,7 @@ class TransactionController {
           title: 'Penawaran produk',
           message: `${product?.product}\n Rp${product?.price}\n Ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         await Notification.create({
@@ -428,8 +423,7 @@ class TransactionController {
           title: 'Penawaran produk',
           message: `${product?.product}\n Rp${product?.price}\n Menawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         sStatus = 2
@@ -440,8 +434,7 @@ class TransactionController {
           subtitle: 'Kamu akan segera dihubungi penjual via whatsapp',
           message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         await Notification.create({
@@ -450,8 +443,7 @@ class TransactionController {
           subtitle: 'Anda menyetujui penawaran',
           message: `${product?.product}\n <s>Rp${product?.price}</s> \n Berhasil ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         sStatus = 2
@@ -462,8 +454,7 @@ class TransactionController {
           subtitle: 'Penawaran anda tidak disetujui penjual',
           message: `${product?.product}\n Rp${product?.price} \n Gagal ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         await Notification.create({
@@ -472,15 +463,14 @@ class TransactionController {
           subtitle: 'Anda menolak penawaran',
           message: `${product?.product}\n Rp${product?.price} \n Gagal ditawar Rp${transaction.bid_price}`,
           path: `transaction/${transaction.id}`,
-          image: `${product_picture?.picture}`,
-          createdBy: req.user.id
+          image: `${product_picture?.picture}`
         })
 
         sStatus = 1
       }
 
-      await Product.update({status: sStatus, updatedBy: req.user.id}, {where: {id: product.id}})
-      await Transaction.update({bid_status: bid_status, bid_status_at: new Date(), updatedBy: req.user.id }, {where: {id: req.params.id}})
+      await Product.update({status: sStatus}, {where: {id: product.id}})
+      await Transaction.update({bid_status: bid_status, bid_status_at: new Date() }, {where: {id: req.params.id}})
 
       await t.commit();
       return res.status(200).json({
@@ -499,7 +489,7 @@ class TransactionController {
 
   async delete(req, res){
     let transaction = await Transaction.findOne({where: {id: req.params.id}})
-    if(!transaction?.product_id){
+    if(!transaction?.title){
       return res.status(200).json({
         status: false,
         message: 'Data not found',
