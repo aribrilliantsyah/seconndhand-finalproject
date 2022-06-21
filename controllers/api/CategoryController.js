@@ -55,7 +55,7 @@ class CategoryController {
 
     let qRes = await Category.create({
       category: category,
-      createBy: req.user.id,
+      createdBy: req.user.id,
     });
 
     if (qRes.id) {
