@@ -1,5 +1,10 @@
 'use strict';
 
+'use strict';
+const { v4: uuidv4 } = require('uuid')
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
+
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
