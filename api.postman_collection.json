@@ -43,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Ari A\",\r\n    \"email\": \"aritest@gmail.com\",\r\n    \"password\": \"rahasia\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Ari A\",\r\n    \"email\": \"ari1@gmail.com\",\r\n    \"password\": \"rahasia\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -181,12 +181,12 @@
 							"query": [
 								{
 									"key": "user_id",
-									"value": "1",
+									"value": "2",
 									"disabled": true
 								},
 								{
 									"key": "title",
-									"value": "",
+									"value": "wk",
 									"disabled": true
 								},
 								{
@@ -361,55 +361,6 @@
 								"api",
 								"v1",
 								"notification",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Mark As Read",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/notification/mark_as_read/:id",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"notification",
-								"mark_as_read",
 								":id"
 							],
 							"variable": [
@@ -985,7 +936,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/product?category=1",
+							"raw": "{{base_url}}/api/v1/product?product=&page&limit&order=id:DESC",
 							"host": [
 								"{{base_url}}"
 							],
@@ -997,27 +948,19 @@
 							"query": [
 								{
 									"key": "product",
-									"value": "product 1",
-									"disabled": true
+									"value": ""
 								},
 								{
 									"key": "page",
-									"value": null,
-									"disabled": true
+									"value": null
 								},
 								{
 									"key": "limit",
-									"value": "2",
-									"disabled": true
+									"value": null
 								},
 								{
 									"key": "order",
-									"value": "id:DESC",
-									"disabled": true
-								},
-								{
-									"key": "category",
-									"value": "1"
+									"value": "id:DESC"
 								}
 							]
 						}
@@ -1030,7 +973,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/product/public?product=&page&limit=&order=id:DESC&category=3,4",
+							"raw": "{{base_url}}/api/v1/product/public?product=&page&limit&order=id:DESC",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1051,15 +994,11 @@
 								},
 								{
 									"key": "limit",
-									"value": ""
+									"value": null
 								},
 								{
 									"key": "order",
 									"value": "id:DESC"
-								},
-								{
-									"key": "category",
-									"value": "3,4"
 								}
 							]
 						}
@@ -1095,7 +1034,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "1"
 								}
 							]
 						}
@@ -1119,7 +1058,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"product\": \"Test Barang\",\r\n    \"price\": \"5000\",\r\n    \"category_id\": \"1\",\r\n    \"description\": \"ini product 6\",\r\n    \"status\": 1,\r\n    \"pictures\": [\r\n        \"uploads/product/pictures-1655900295570-610286145.jpg\",\r\n        \"uploads/product/pictures-1655900295585-840343761.jpg\",\r\n        \"uploads/product/pictures-1655900295589-869210671.jpg\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"product\": \"ini product 6\",\r\n    \"price\": \"10000\",\r\n    \"category_id\": \"1\",\r\n    \"description\": \"ini product 6\",\r\n    \"status\": 1,\r\n    \"pictures\": [\"uploads\\\\product\\\\pictures-1655741419652-646445380.jpeg\", \"uploads\\\\product\\\\pictures-1655741419711-105121523.jpg\", \"uploads\\\\product\\\\pictures-1655741419723-52130902.PNG\", \"uploads\\\\product\\\\pictures-1655741419864-715194419.PNG\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1157,7 +1096,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"product\": \"Test Barang Ubah\",\r\n    \"price\": \"5000\",\r\n    \"category_id\": \"1\",\r\n    \"description\": \"ini product ubah\",\r\n    \"status\": 1,\r\n    \"pictures\": [\r\n        \"uploads/product/pictures-1655900295570-610286145.jpg\",\r\n        \"uploads/product/pictures-1655900555616-390879801.jpg\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"product\": \"product aw\",\r\n    \"price\": \"20000\",\r\n    \"category_id\": \"2\",\r\n    \"description\": \"descripsi diubah\",\r\n    \"status\": 1,\r\n    \"pictures\": [\r\n        \"uploads/product/pictures-1655819226558-617324323.jpg\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1251,7 +1190,10 @@
 								{
 									"key": "pictures",
 									"type": "file",
-									"src": "/C:/Users/ariar.DAK/OneDrive/Pictures/13nld3ofwz9gwa7w0a-16534792687115.jpg"
+									"src": [
+										"/C:/Users/ariar.DAK/OneDrive/Pictures/273019128_734205690827988_8514443402792736529_n.jpg",
+										"/C:/Users/ariar.DAK/OneDrive/Pictures/273528191_1373321426463240_3341456182309184518_n.jpg"
+									]
 								}
 							]
 						},
@@ -1663,7 +1605,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"product_id\": \"5\",\r\n    \"bid_price\": \"500\"\r\n}",
+							"raw": "{\r\n    \"buyer_id\": \"2\",\r\n    \"product_id\": \"1\",\r\n    \"bid_price\": \"10000\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1703,7 +1645,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"bid_status\": \"2\"\r\n}",
+							"raw": "{\r\n    \"bid_status\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1774,7 +1716,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}

@@ -51,7 +51,7 @@ paths:
               type: object
               example:
                 name: Ari A
-                email: aritest@gmail.com
+                email: ari1@gmail.com
                 password: rahasia
       responses:
         '200':
@@ -199,25 +199,6 @@ paths:
       tags:
         - Notification
       summary: Delete
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: integer
-          required: true
-          example: '1'
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /api/v1/notification/mark_as_read/{id}:
-    get:
-      tags:
-        - Notification
-      summary: Mark As Read
       security:
         - bearerAuth: []
       parameters:
@@ -496,11 +477,23 @@ paths:
       security:
         - bearerAuth: []
       parameters:
-        - name: category
+        - name: product
           in: query
           schema:
-            type: integer
-          example: '1'
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+        - name: order
+          in: query
+          schema:
+            type: string
+          example: id:DESC
       responses:
         '200':
           description: Successful response
@@ -516,15 +509,16 @@ paths:
             schema:
               type: object
               example:
-                product: Test Barang
-                price: '5000'
+                product: ini product 6
+                price: '10000'
                 category_id: '1'
                 description: ini product 6
                 status: 1
                 pictures:
-                  - uploads/product/pictures-1655900295570-610286145.jpg
-                  - uploads/product/pictures-1655900295585-840343761.jpg
-                  - uploads/product/pictures-1655900295589-869210671.jpg
+                  - uploads\product\pictures-1655741419652-646445380.jpeg
+                  - uploads\product\pictures-1655741419711-105121523.jpg
+                  - uploads\product\pictures-1655741419723-52130902.PNG
+                  - uploads\product\pictures-1655741419864-715194419.PNG
       security:
         - bearerAuth: []
       responses:
@@ -555,11 +549,6 @@ paths:
           schema:
             type: string
           example: id:DESC
-        - name: category
-          in: query
-          schema:
-            type: string
-          example: 3,4
       responses:
         '200':
           description: Successful response
@@ -578,7 +567,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '6'
+          example: '1'
       responses:
         '200':
           description: Successful response
@@ -594,14 +583,13 @@ paths:
             schema:
               type: object
               example:
-                product: Test Barang Ubah
-                price: '5000'
-                category_id: '1'
-                description: ini product ubah
+                product: product aw
+                price: '20000'
+                category_id: '2'
+                description: descripsi diubah
                 status: 1
                 pictures:
-                  - uploads/product/pictures-1655900295570-610286145.jpg
-                  - uploads/product/pictures-1655900555616-390879801.jpg
+                  - uploads/product/pictures-1655819226558-617324323.jpg
       security:
         - bearerAuth: []
       parameters:
@@ -824,8 +812,9 @@ paths:
             schema:
               type: object
               example:
-                product_id: '5'
-                bid_price: '500'
+                buyer_id: '2'
+                product_id: '1'
+                bid_price: '10000'
       security:
         - bearerAuth: []
       responses:
@@ -844,7 +833,7 @@ paths:
             schema:
               type: object
               example:
-                bid_status: '2'
+                bid_status: '1'
       security:
         - bearerAuth: []
       parameters:
@@ -879,7 +868,7 @@ paths:
           schema:
             type: integer
           required: true
-          example: '2'
+          example: '1'
       responses:
         '200':
           description: Successful response
