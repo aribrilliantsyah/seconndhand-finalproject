@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     message: DataTypes.TEXT,
     path: DataTypes.STRING,
     image: DataTypes.STRING,
+    read: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER
   }, {

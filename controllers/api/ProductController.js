@@ -1,4 +1,4 @@
-const { Product, User, Category, ProductPicture } = require("../../models");
+const { Product, User, Category, ProductPicture, Notification } = require("../../models");
 const Validator = require("validatorjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -13,11 +13,16 @@ class ProductController {
 		let offset = (page - 1) * limit
 
 		let qWhere = {}
-		if(req.query.product) qWhere.product = { [Op.like]: `%${req.query.product}%`}
+		if(req.query.product) qWhere.product = { [Op.iLike]: `%${req.query.product}%`}
 		if(req.user){
-			if(req.user.id) qWhere.seller_id = { [Op.not]: req.user.id}
+			if(req.user.id) qWhere.seller_id = req.user.id
 		}
 
+		if(req.query.category) {
+      let categories = req.query.category.split(',')
+      if(categories.length > 0) qWhere.category_id = { [Op.in]: categories }
+    }
+    
 		let qOrder = []
 		if(req.query.order != undefined){
 			let order = req.query.order
@@ -101,6 +106,7 @@ class ProductController {
 				{
 					model: User,
 					as: "user",
+					attributes: ['id', 'uuid', 'email']
 				},
 			],
 			where: {id: req.params.id},
@@ -173,6 +179,16 @@ class ProductController {
 					})
 				}
 			}
+			await Notification.create({
+				user_id: req.user.id,
+				title: "Berhasil di terbitkan",
+				subtitle: qRes.product,
+				message: qRes.price,
+				path: `product/${qRes.id}`,
+				image: `${picsRes[0].picture}`,
+				createdBy: req.user.id
+			})
+
 			return res.status(201).json({
 				status: true,
 				message: "Create Successfully",
@@ -358,7 +374,8 @@ class ProductController {
 
 		return res.status(200).json({
 			status: true,
-			message: req.files,
+			message: 'Success Upload',
+      data: req.files
 		});
 	}
 

@@ -18,7 +18,7 @@ class TransactionController {
     if(req.query.transaction_status != undefined) qWhere.transaction_status = req.query.transaction_status
 
     let qWhereProduct;
-    if(req.query.product) qWhereProduct.product = { [Op.like]: `%${req.query.product}%`}  
+    if(req.query.product) qWhereProduct.product = { [Op.iLike]: `%${req.query.product}%`}  
     
     let qOrder = []
     if(req.query.order != undefined){
@@ -189,7 +189,6 @@ class TransactionController {
   //
   async buyerBid(req, res){
     let rules = {
-      buyer_id: 'required',
       product_id: 'required',
       bid_price: 'required'
     }
@@ -203,7 +202,8 @@ class TransactionController {
       })
     }
     
-    let { buyer_id, product_id, bid_price } = req.body
+    let { product_id, bid_price } = req.body
+    let buyer_id = req.user.id
     
     const t = await sequelize.transaction();
 
