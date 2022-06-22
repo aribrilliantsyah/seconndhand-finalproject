@@ -101,6 +101,7 @@ class ProductController {
 				{
 					model: User,
 					as: "user",
+					attributes: ['id', 'uuid', 'email']
 				},
 			],
 			where: {id: req.params.id},
@@ -358,7 +359,7 @@ class ProductController {
 
 		return res.status(200).json({
 			status: true,
-			message: req.files,
+			data: req.files,
 		});
 	}
 
