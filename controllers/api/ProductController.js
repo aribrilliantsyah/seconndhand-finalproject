@@ -17,8 +17,12 @@ class ProductController {
 		if(req.user){
 			if(req.user.id) qWhere.seller_id = req.user.id
 		}
-		if(req.query.category) qWhere.category_id = req.query.category
 
+		if(req.query.category) {
+      let categories = req.query.category.split(',')
+      if(categories.length > 0) qWhere.category_id = { [Op.in]: categories }
+    }
+    
 		let qOrder = []
 		if(req.query.order != undefined){
 			let order = req.query.order
