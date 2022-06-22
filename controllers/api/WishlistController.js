@@ -1,4 +1,4 @@
-const { Wishlist, User, Product } = require("../../models");
+const { Wishlist, User, Product, ProductPicture } = require("../../models");
 const Validator = require("validatorjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -35,6 +35,7 @@ class WishlistController {
 		
 		if(!page){
 			qRes = await Wishlist.findAll({
+				attributes: ['id', 'product_id', 'user_id', 'createdBy', 'updatedBy'],
 				include: [
 					{
 						model: User,
@@ -43,7 +44,14 @@ class WishlistController {
 					},
 					{
 						model: Product,
-						as: 'product'
+						as: 'product',
+						include: [
+							{
+								model: ProductPicture,
+								as: 'product_pictures',
+								attributes: ['id', 'picture'],
+							}
+						]
 					},
 				],
 				order: qOrder,
@@ -51,6 +59,7 @@ class WishlistController {
 			});
 		}else{
 			qRes = await Wishlist.findAll({
+				attributes: ['id', 'product_id', 'user_id', 'createdBy', 'updatedBy'],
 				offset: offset,
 				limit: limit,
 				include: [
@@ -61,7 +70,14 @@ class WishlistController {
 					},
 					{
 						model: Product,
-						as: 'product'
+						as: 'product',
+						include: [
+							{
+								model: ProductPicture,
+								as: 'product_pictures',
+								attributes: ['id', 'picture'],
+							}
+						]
 					},
 				],
 				order: qOrder,

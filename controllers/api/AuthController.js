@@ -51,6 +51,7 @@ class AuthController {
       message: 'Email & Password Match',
       data: {
         token: token,
+        user_id: user_id,
         expired_at: moment().add(1, 'days').format('YYYY-MM-DD HH:mm:ss')
       }
     })
