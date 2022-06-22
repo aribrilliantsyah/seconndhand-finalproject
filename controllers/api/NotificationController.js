@@ -233,6 +233,36 @@ class NotificationController {
       message: 'Delete Failed',
     })
   }
+
+  //mark_as_read
+  async markAsRead(req, res){
+    let notification = await Notification.findOne({where: {id: req.params.id}})
+    if(!notification?.title){
+      return res.status(200).json({
+        status: false,
+        message: 'Data not found',
+      })
+    }
+
+    let qRes = await Notification.update({
+      read: 1
+    },{
+      where: {id: req.params.id}
+    })
+
+    if(qRes){
+      return res.status(200).json({
+        status: true,
+        message: 'Change Status Successfully',
+      })
+    }
+
+    return res.status(200).json({
+      status: false,
+      message: 'Change Status Failed',
+    })
+  }
+
 }
 
 

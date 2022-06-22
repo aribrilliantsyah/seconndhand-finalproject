@@ -32,6 +32,10 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
+      read: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       createdBy: {
         type: Sequelize.INTEGER
       },
