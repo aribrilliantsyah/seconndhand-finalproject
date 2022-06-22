@@ -11,7 +11,7 @@ const fs = require('fs')
 
 const AuthRouterApi = require("./routes/api/AuthRouter")
 const NotificationRouter = require("./routes/api/NotificationRouter")
-
+const BiodataRouterApi = require("./routes/api/BiodataRouter")
 const CityRouter = require("./routes/api/CityRouter")
 
 const ProductRouter = require("./routes/api/ProductRouter")
@@ -73,10 +73,9 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use(apiVersion, AuthRouterApi)
+app.use(apiVersion, BiodataRouterApi)
 app.use(apiVersion, NotificationRouter)
-
 app.use(apiVersion, CityRouter)
-
 app.use(apiVersion, ProductRouter)
 app.use(apiVersion, WishlistRouter)
 app.use(apiVersion, TransactionRouter)

@@ -91,7 +91,8 @@ class AuthController {
 
     let nBiodata = await Biodata.create({
       fullname: name,
-      user_id: nUser.id
+      user_id: nUser.id,
+      profile_picture: 'uploads/profile/default.png'
     })
 
     new Mailer({
