@@ -13,7 +13,7 @@ class NotificationController {
     
     let qWhere = {}
     if(req.query.user_id != undefined) qWhere.user_id = req.query.user_id
-    if(req.query.title) qWhere.title = { [Op.like]: `%${req.query.title}%`}  
+    if(req.query.title) qWhere.title = { [Op.iLike]: `%${req.query.title}%`}  
     
     let qOrder = []
     if(req.query.order != undefined){

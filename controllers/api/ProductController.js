@@ -13,7 +13,7 @@ class ProductController {
 		let offset = (page - 1) * limit
 
 		let qWhere = {}
-		if(req.query.product) qWhere.product = { [Op.like]: `%${req.query.product}%`}
+		if(req.query.product) qWhere.product = { [Op.iLike]: `%${req.query.product}%`}
 		if(req.user){
 			if(req.user.id) qWhere.seller_id = req.user.id
 		}

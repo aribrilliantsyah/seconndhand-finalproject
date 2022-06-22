@@ -18,7 +18,7 @@ class TransactionController {
     if(req.query.transaction_status != undefined) qWhere.transaction_status = req.query.transaction_status
 
     let qWhereProduct;
-    if(req.query.product) qWhereProduct.product = { [Op.like]: `%${req.query.product}%`}  
+    if(req.query.product) qWhereProduct.product = { [Op.iLike]: `%${req.query.product}%`}  
     
     let qOrder = []
     if(req.query.order != undefined){
