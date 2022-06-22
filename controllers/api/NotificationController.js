@@ -245,7 +245,8 @@ class NotificationController {
     }
 
     let qRes = await Notification.update({
-      read: 1
+      read: 1,
+      updatedBy: req.user.id
     },{
       where: {id: req.params.id}
     })
