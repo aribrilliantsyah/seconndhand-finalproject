@@ -17,6 +17,7 @@ class ProductController {
 		if(req.user){
 			if(req.user.id) qWhere.seller_id = req.user.id
 		}
+		if(req.query.category) qWhere.category_id = req.query.category
 
 		let qOrder = []
 		if(req.query.order != undefined){
@@ -101,6 +102,7 @@ class ProductController {
 				{
 					model: User,
 					as: "user",
+					attributes: ['id', 'uuid', 'email']
 				},
 			],
 			where: {id: req.params.id},

@@ -16,17 +16,17 @@ module.exports = {
 
     await queryInterface.bulkInsert('categories', [
       {
-        category: "Makanan",
+        category: "Hobi",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        category: "Minuman",
+        category: "Kendaraan",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        category: "Hiburan",
+        category: "Baju",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -36,7 +36,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        category: "Hobi",
+        category: "Kesehatan",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -53,19 +53,19 @@ module.exports = {
 
     await queryInterface.bulkDelete('categories', [
       {
-        category: "Makanan",
+        category: "Hobi",
       },
       {
-        category: "Minuman",
+        category: "Kendaraan",
       },
       {
-        category: "Hiburan",
+        category: "Baju",
       },
       {
         category: "Elektronik",
       },
       {
-        category: "Hobi",
+        category: "Kesehatan",
       },
     ])
   }
