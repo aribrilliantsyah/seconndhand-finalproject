@@ -91,7 +91,6 @@ class NotificationController {
     let rules = {
       user_id: 'required',
       title: 'required', 
-      subtitle: 'required', 
       message: 'required',
       path: 'required',
       image: 'required',
@@ -107,7 +106,7 @@ class NotificationController {
     }
 
     
-    let { user_id, title, subtitle, message, path, image } = req.body
+    let { user_id, title, message, path, image } = req.body
     
     let user = await User.findOne({where: {id: user_id}})
     if(!user?.email){
@@ -120,7 +119,6 @@ class NotificationController {
     let qRes = await Notification.create({
       user_id: user_id,
       title: title,
-      subtitle: subtitle,
       message: message,
       path: path,
       image: image,
@@ -146,7 +144,6 @@ class NotificationController {
     let rules = {
       user_id: 'required',
       title: 'required', 
-      subtitle: 'required', 
       message: 'required',
       path: 'required',
       image: 'required',
@@ -161,7 +158,7 @@ class NotificationController {
       })
     }
     
-    let { user_id, title, subtitle, message, path, image } = req.body
+    let { user_id, title, message, path, image } = req.body
 
     let notification = await Notification.findOne({where: {id: req.params.id}})
     if(!notification?.title){
@@ -182,11 +179,10 @@ class NotificationController {
     let data = {
       user_id: user_id,
       title: title,
-      subtitle: subtitle,
       message: message,
       path: path,
       image: image,
-      updatedBy: req.user.id
+      updateBy: req.user.id
     }
 
     let qRes = await Notification.update(data, {
