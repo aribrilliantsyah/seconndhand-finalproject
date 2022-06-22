@@ -358,7 +358,8 @@ class ProductController {
 
 		return res.status(200).json({
 			status: true,
-			message: req.files,
+			message: 'Success Upload',
+      data: req.files
 		});
 	}
 

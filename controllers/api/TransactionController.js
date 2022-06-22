@@ -189,7 +189,6 @@ class TransactionController {
   //
   async buyerBid(req, res){
     let rules = {
-      buyer_id: 'required',
       product_id: 'required',
       bid_price: 'required'
     }
@@ -203,7 +202,8 @@ class TransactionController {
       })
     }
     
-    let { buyer_id, product_id, bid_price } = req.body
+    let { product_id, bid_price } = req.body
+    let buyer_id = req.user.id
     
     const t = await sequelize.transaction();
 

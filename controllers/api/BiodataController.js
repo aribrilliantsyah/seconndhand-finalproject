@@ -11,6 +11,11 @@ class BiodataController {
           model: User,
           as: 'user',   
           attributes: ['id', 'uuid', 'email']
+        },
+        {
+          model: City,
+          as: 'city',   
+          attributes: ['id', 'city']
         }
       ],
       where: {user_id: req.params.user_id}
