@@ -55,7 +55,7 @@ class CategoryController {
 
     let qRes = await Category.create({
       category: category,
-      createBy: req.user.id,
+      createdBy: req.user.id,
     });
 
     if (qRes.id) {
@@ -99,7 +99,7 @@ class CategoryController {
 
     let data = {
       category: category,
-      updateBy: req.user.id,
+      updatedBy: req.user.id,
     };
 
     let qRes = await Category.update(data, {
