@@ -1,4 +1,4 @@
-const { Product, User, Category, ProductPicture } = require("../../models");
+const { Product, User, Category, ProductPicture, Notification } = require("../../models");
 const Validator = require("validatorjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -175,6 +175,16 @@ class ProductController {
 					})
 				}
 			}
+			await Notification.create({
+				user_id: req.user.id,
+				title: "Berhasil di terbitkan",
+				subtitle: qRes.product,
+				message: qRes.price,
+				path: `product/${qRes.id}`,
+				image: `${picsRes[0].picture}`,
+				createdBy: req.user.id
+			})
+
 			return res.status(201).json({
 				status: true,
 				message: "Create Successfully",
