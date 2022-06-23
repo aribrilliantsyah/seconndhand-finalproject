@@ -35,7 +35,7 @@ router.get(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.fi
 router.post(`/product`, Middleware.verifyJwt, Middleware.checkProfile, ctl.create)
 router.put(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.update)
 router.delete(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.delete)
-router.post(`/product/upload-pics/`, upload.array('pictures', 4), Middleware.verifyJwt, Middleware.checkProfile, ctl.uploadPics)
+router.post(`/product/upload-pics/`, Middleware.verifyJwt, Middleware.checkProfile, upload.array('pictures', 4), ctl.uploadPics)
 router.delete(`/product/delete-pics/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.deletePics)
 
 module.exports = router
