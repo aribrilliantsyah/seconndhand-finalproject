@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const { Biodata } = require('../models');
 const privateKey = process.env.JWT_PRIVATE_KEY
 
 class Middleware {
@@ -31,6 +32,25 @@ class Middleware {
       req.user = user
       next()
     })
+  }
+
+  static async checkProfile(req, res, next){
+    if(req.user){
+      const biodata = await Biodata.findOne({
+        where: {user_id: req.user.id}
+      })
+      if(!biodata.fullname ||
+        !biodata.profile_picture ||
+        !biodata.city_id ||
+        !biodata.address ||
+        !biodata.number_phone){
+          return res.status(400).json({
+            status: false,
+            message: 'Please complete your profile first!'
+          })
+        }
+    }
+    next()
   }
   
 }
