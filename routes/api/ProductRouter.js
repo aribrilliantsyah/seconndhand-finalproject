@@ -30,12 +30,12 @@ const upload = multer({
 })
 
 router.get(`/product/public`, ctl.getAll)
-router.get(`/product/`, Middleware.verifyJwt, ctl.getAll)
-router.get(`/product/:id`, Middleware.verifyJwt, ctl.findByID)
-router.post(`/product`, Middleware.verifyJwt, ctl.create)
-router.put(`/product/:id`, Middleware.verifyJwt, ctl.update)
-router.delete(`/product/:id`, Middleware.verifyJwt, ctl.delete)
-router.post(`/product/upload-pics/`, upload.array('pictures', 4), Middleware.verifyJwt, ctl.uploadPics)
-router.delete(`/product/delete-pics/:id`, Middleware.verifyJwt, ctl.deletePics)
+router.get(`/product/`, Middleware.verifyJwt, Middleware.checkProfile, ctl.getAll)
+router.get(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.findByID)
+router.post(`/product`, Middleware.verifyJwt, Middleware.checkProfile, ctl.create)
+router.put(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.update)
+router.delete(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.delete)
+router.post(`/product/upload-pics/`, Middleware.verifyJwt, Middleware.checkProfile, upload.array('pictures', 4), ctl.uploadPics)
+router.delete(`/product/delete-pics/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.deletePics)
 
 module.exports = router
