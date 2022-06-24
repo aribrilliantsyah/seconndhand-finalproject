@@ -140,6 +140,22 @@ class ProductController {
 
 		let { product, price, category_id, description, seller_id, status, pictures } = req.body;
 
+    let total_product = await Product.count({
+      where: {
+        seller_id: req.user.id,
+        status: {
+          [Op.in]: [0,1,2]
+        }
+      }
+    });
+    
+    if(total_product == 4){
+      return res.status(400).json({ 
+        status: false,
+        message: 'You can only sell 4 products' 
+      })
+    }
+    
 		let category = await Category.findOne({where: {id: category_id}});
 		if (!category?.category) {
 			return res.status(200).json({
@@ -157,6 +173,13 @@ class ProductController {
 				});
 			}
 		}
+
+    if(pictures.length > 4){
+      return res.status(400).json({ 
+        status: false,
+        message: 'You can only upload 4 pictures' 
+      })
+    }
 
 		let qRes = await Product.create({
 			product,
@@ -223,6 +246,13 @@ class ProductController {
 		}
 
 		let { product, price, category_id, published, description, seller_id, pictures } = req.body;
+
+    if(pictures.length > 4){
+      return res.status(400).json({ 
+        status: false,
+        message: 'You can only upload 4 pictures' 
+      })
+    }
 
 		let itemProduct = await Product.findOne({where: {id: req.params.id}});
 		if (!itemProduct?.product) {
