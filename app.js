@@ -20,7 +20,6 @@ const WishlistRouter = require("./routes/api/WishlistRouter")
 const TransactionRouter = require("./routes/api/TransactionRouter")
 const CategoryRouter = require("./routes/api/CategoryRouter")
 
-
 const app = express()
 const apiVersion = '/api/v1'
 const swaggerDocument = YAML.load('collection.yaml')
