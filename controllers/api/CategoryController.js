@@ -4,14 +4,7 @@ const Validator = require("validatorjs");
 class CategoryController {
   //read all
   async getAll(req, res) {
-    let qRes = await Category.findAll({
-      include: [
-        {
-          model: Product,
-          as: "products",
-        },
-      ],
-    });
+    let qRes = await Category.findAll();
 
     return res.status(200).json({
       status: true,
