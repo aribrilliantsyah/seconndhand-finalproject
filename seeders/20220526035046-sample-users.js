@@ -83,6 +83,8 @@ module.exports = {
         'user_id': 1,
         'fullname': 'Ari Ardiansyah',
         'profile_picture': 'uploads/profile/default.png',
+        'number_phone': '083',
+        'address': 'test',
         'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()
@@ -91,6 +93,8 @@ module.exports = {
         'user_id': 2,
         'fullname': 'Anang Bagus',
         'profile_picture': 'uploads/profile/default.png',
+        'address': 'test',
+        'number_phone': '083',
         'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()
@@ -99,6 +103,8 @@ module.exports = {
         'user_id': 3,
         'fullname': 'Ester',
         'profile_picture': 'uploads/profile/default.png',
+        'address': 'test',
+        'number_phone': '083',
         'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()

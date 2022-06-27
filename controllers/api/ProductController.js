@@ -18,7 +18,7 @@ class ProductController {
 			if(req.user.id) qWhere.seller_id = req.user.id
 		}
 
-		if(req.query.category) {
+		if(req?.query?.category && req?.query?.category != '' && req?.query?.category != null) {
       let categories = req.query.category.split(',')
       if(categories.length > 0) qWhere.category_id = { [Op.in]: categories }
     }
