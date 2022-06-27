@@ -58,6 +58,7 @@ let log_name = '/logs/access_log_'+moment().format('YYYY_MM_DD')+'.log';
 //     stream: accessLogStream
 // }))
 
+
 app.use(cors())
 app.use(express.json())
 app.get('/', (req, res) => {
