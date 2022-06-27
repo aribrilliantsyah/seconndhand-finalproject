@@ -31,6 +31,7 @@ const upload = multer({
 
 router.get(`/product/public`, ctl.getAll)
 router.get(`/product/`, Middleware.verifyJwt, Middleware.checkProfile, ctl.getAll)
+router.get(`/product/public/:id`, Middleware.checkProfile, ctl.findByID)
 router.get(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.findByID)
 router.post(`/product`, Middleware.verifyJwt, Middleware.checkProfile, ctl.create)
 router.put(`/product/:id`, Middleware.verifyJwt, Middleware.checkProfile, ctl.update)
