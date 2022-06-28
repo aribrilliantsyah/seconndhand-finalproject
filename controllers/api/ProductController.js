@@ -93,12 +93,13 @@ class ProductController {
 
 	//read single
 	async findByID(req, res) {
-    if(!req?.params?.id || req?.params?.id == undefined){
+    if(req?.params?.id == 'undefined'){
       return res.status(200).json({
         status: false,
         message: 'Invalid ID',
       })
     }
+
 		let qRes = await Product.findOne({
 			include: [
 				{
