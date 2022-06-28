@@ -4,6 +4,7 @@ const CategoryController = require("../../controllers/api/CategoryController");
 const Middleware = require("../../middleware/Middleware");
 const ctl = new CategoryController();
 
+router.get(`/category/public`, ctl.getAll);
 router.get(`/category/`, Middleware.verifyJwt, ctl.getAll);
 router.get(`/category/:id`, Middleware.verifyJwt, ctl.findByID);
 router.post(`/category`, Middleware.verifyJwt, ctl.create);

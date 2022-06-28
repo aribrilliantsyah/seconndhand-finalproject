@@ -18,7 +18,7 @@ class ProductController {
 			if(req.user.id) qWhere.seller_id = req.user.id
 		}
 
-		if(req.query.category) {
+		if(req?.query?.category && req?.query?.category != '' && req?.query?.category != null) {
       let categories = req.query.category.split(',')
       if(categories.length > 0) qWhere.category_id = { [Op.in]: categories }
     }
@@ -93,6 +93,12 @@ class ProductController {
 
 	//read single
 	async findByID(req, res) {
+    if(!req?.params?.id || req?.params?.id == undefined){
+      return res.status(200).json({
+        status: false,
+        message: 'Invalid ID',
+      })
+    }
 		let qRes = await Product.findOne({
 			include: [
 				{
