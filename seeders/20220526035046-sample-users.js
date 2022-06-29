@@ -128,7 +128,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-     await queryInterface.bulkDelete('users', [
+    await queryInterface.bulkDelete('users', [
       {
         'username': 'ariardiansyah101@gmail.com',
       },
@@ -136,5 +136,26 @@ module.exports = {
         'username': 'anangbagus666@gmail.com',
       }
      ]);
+
+    await queryInterface.bulkDelete('biodata', [
+      {
+        'user_id': 1,
+      },
+      {
+        'user_id': 2,
+      },
+      {
+        'user_id': 3,
+      },
+      {
+        'user_id': 4,
+      },
+    ]);
+
+    await queryInterface.bulkDelete('cities', [
+      {
+        'city': 'Kota',
+      }
+    ]);
   }
 };

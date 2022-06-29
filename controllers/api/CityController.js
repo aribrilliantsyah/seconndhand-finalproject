@@ -4,14 +4,7 @@ const Validator = require('validatorjs')
 class CityController {
   //read all
   async getAll(req, res){
-    let qRes = await City.findAll({
-      include: [
-        {
-          model: Biodata,
-          as: 'biodata'
-        }
-      ]
-    })
+    let qRes = await City.findAll()
 
     return res.status(200).json({
       status: true,
