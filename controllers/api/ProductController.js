@@ -93,12 +93,13 @@ class ProductController {
 
 	//read single
 	async findByID(req, res) {
-    if(!req?.params?.id || req?.params?.id == undefined){
+    if(req?.params?.id == 'undefined'){
       return res.status(200).json({
         status: false,
         message: 'Invalid ID',
       })
     }
+
 		let qRes = await Product.findOne({
 			include: [
 				{
@@ -312,8 +313,10 @@ class ProductController {
 				if(productPics[j]?.id == del_id[i]){
 					try {
 						let _path = `./${productPics[j]?.picture}`
-						if(fs.existsSync(_path)){
-							fs.unlinkSync(_path)
+						if(_path != `./uploads/product/default.png`){
+							if(fs.existsSync(_path)){
+								fs.unlinkSync(_path)
+							}
 						}
 					} catch(err) {
 						return res.status(500).json({
@@ -371,8 +374,10 @@ class ProductController {
 				if(productPics[i]?.picture){
 					try {
 						let _path = `./${productPics[i]?.picture}`
-						if(fs.existsSync(_path)){
-							fs.unlinkSync(_path)
+						if(_path != `./uploads/product/default.png`){
+							if(fs.existsSync(_path)){
+								fs.unlinkSync(_path)
+							}
 						}
 					} catch(err) {
 						return res.status(500).json({
@@ -429,8 +434,10 @@ class ProductController {
 		if(productPics?.picture){
 			try {
 				let _path = `./${productPics?.picture}`
-				if(fs.existsSync(_path)){
-					fs.unlinkSync(_path)
+				if(_path != `./uploads/product/default.png`){
+					if(fs.existsSync(_path)){
+						fs.unlinkSync(_path)
+					}
 				}
 			} catch(err) {
 				return res.status(500).json({
