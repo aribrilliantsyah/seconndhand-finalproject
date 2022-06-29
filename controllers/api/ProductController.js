@@ -313,8 +313,10 @@ class ProductController {
 				if(productPics[j]?.id == del_id[i]){
 					try {
 						let _path = `./${productPics[j]?.picture}`
-						if(fs.existsSync(_path)){
-							fs.unlinkSync(_path)
+						if(_path != `./uploads/product/default.png`){
+							if(fs.existsSync(_path)){
+								fs.unlinkSync(_path)
+							}
 						}
 					} catch(err) {
 						return res.status(500).json({
@@ -372,8 +374,10 @@ class ProductController {
 				if(productPics[i]?.picture){
 					try {
 						let _path = `./${productPics[i]?.picture}`
-						if(fs.existsSync(_path)){
-							fs.unlinkSync(_path)
+						if(_path != `./uploads/product/default.png`){
+							if(fs.existsSync(_path)){
+								fs.unlinkSync(_path)
+							}
 						}
 					} catch(err) {
 						return res.status(500).json({
@@ -430,8 +434,10 @@ class ProductController {
 		if(productPics?.picture){
 			try {
 				let _path = `./${productPics?.picture}`
-				if(fs.existsSync(_path)){
-					fs.unlinkSync(_path)
+				if(_path != `./uploads/product/default.png`){
+					if(fs.existsSync(_path)){
+						fs.unlinkSync(_path)
+					}
 				}
 			} catch(err) {
 				return res.status(500).json({
