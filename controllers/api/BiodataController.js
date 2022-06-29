@@ -57,13 +57,13 @@ class BiodataController {
     let profile_picture = biodata.profile_picture;
     if(req?.body?.profile_picture){
       try {
-        if(biodata?.profile_picture != 'uploads/profile/default.png'){
           let _path = `./${biodata?.profile_picture}`
-          if(fs.existsSync(_path)){
-            fs.unlinkSync(_path)
+          if(_path != `./uploads/profile/default.png`){
+            if(fs.existsSync(_path)){
+              fs.unlinkSync(_path)
+            }
           }
           profile_picture = req?.body?.profile_picture
-        }
       } catch(err) {
         return res.status(500).json({
           message: 'Process Error'
