@@ -224,6 +224,13 @@ class TransactionController {
           message: 'Product not found',
         })
       }
+
+      if(product.price < bid_price){
+        return res.status(200).json({
+          status: false,
+          message: `Can't bid below product price`
+        })
+      }
       
       if(product?.seller_id == buyer_id){
         return res.status(200).json({
