@@ -61,6 +61,48 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        product_id: 6,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 7,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 8,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 9,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 10,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 11,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product_id: 12,
+        picture: 'uploads/product/default.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
   },
 
@@ -87,6 +129,27 @@ module.exports = {
       },
       {
         product_id: 5
+      },
+      {
+        product_id: 6
+      },
+      {
+        product_id: 7
+      },
+      {
+        product_id: 8
+      },
+      {
+        product_id: 9
+      },
+      {
+        product_id: 10
+      },
+      {
+        product_id: 11
+      },
+      {
+        product_id: 12
       },
     ])
   }
