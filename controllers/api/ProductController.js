@@ -1,4 +1,5 @@
 const { Product, User, Category, ProductPicture, Notification } = require("../../models");
+const { rupiah } = require("../../utils/currency")
 const Validator = require("validatorjs");
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
@@ -213,7 +214,7 @@ class ProductController {
 				user_id: req.user.id,
 				title: "Berhasil di terbitkan",
 				subtitle: qRes.product,
-				message: qRes.price,
+				message: rupiah(qRes.price),
 				path: `product/${qRes.id}`,
 				image: `${picsRes[0].picture}`,
 				createdBy: req.user.id
