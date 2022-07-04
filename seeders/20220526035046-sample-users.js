@@ -82,7 +82,7 @@ module.exports = {
       {
         'user_id': 1,
         'fullname': 'Ari Ardiansyah',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'number_phone': '083',
         'address': 'test',
         'city_id': 1,
@@ -92,7 +92,7 @@ module.exports = {
       {
         'user_id': 2,
         'fullname': 'Anang Bagus',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'address': 'test',
         'number_phone': '083',
         'city_id': 1,
@@ -102,7 +102,7 @@ module.exports = {
       {
         'user_id': 3,
         'fullname': 'Ester',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'address': 'test',
         'number_phone': '083',
         'city_id': 1,
@@ -112,7 +112,7 @@ module.exports = {
       {
         'user_id': 4,
         'fullname': 'Anisa',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()
