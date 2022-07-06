@@ -256,7 +256,7 @@ class TransactionController {
       await Notification.create({
         user_id: product.seller_id,
         title: 'Penawaran produk',
-        message: `${product?.product} | ${rupiah(product?.price)} | Ditawar ${rupiah(bid_price)}`,
+        message: `${product?.product} <br> ${rupiah(product?.price)} <br> Ditawar ${rupiah(bid_price)}`,
         path: `transaction/${qRes.id}`,
         image: `${product_picture?.picture}`,
         createdBy: req.user.id
@@ -328,7 +328,7 @@ class TransactionController {
           user_id: transaction.buyer_id,
           title: 'Berhasil terbeli',
           subtitle: '',
-          message: `${product?.product} | <s>${rupiah(product?.price)}</s> | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> <s>${rupiah(product?.price)}</s> <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -338,7 +338,7 @@ class TransactionController {
           user_id: transaction.seller_id,
           title: 'Berhasil terjual',
           subtitle: '',
-          message: `${product?.product} | <s>${rupiah(product?.price)}</s> | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> <s>${rupiah(product?.price)}</s> <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -350,7 +350,7 @@ class TransactionController {
           user_id: transaction.buyer_id,
           title: 'Transaksi dibatalkan penjual',
           subtitle: '',
-          message: `${product?.product} | ${rupiah(product?.price)} | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -360,7 +360,7 @@ class TransactionController {
           user_id: transaction.seller_id,
           title: 'Transaksi dibatalkan',
           subtitle: '',
-          message: `${product?.product} | ${rupiah(product?.price)} | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -426,7 +426,7 @@ class TransactionController {
         await Notification.create({
           user_id: transaction.seller_id,
           title: 'Penawaran produk',
-          message: `${product?.product} | ${rupiah(product?.price)} | Ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -435,7 +435,7 @@ class TransactionController {
         await Notification.create({
           user_id: transaction.buyer_id,
           title: 'Penawaran produk',
-          message: `${product?.product} | ${rupiah(product?.price)} | Menawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Menawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -447,7 +447,7 @@ class TransactionController {
           user_id: transaction.buyer_id,
           title: 'Penawaran produk',
           subtitle: 'Kamu akan segera dihubungi penjual via whatsapp',
-          message: `${product?.product} | <s>${rupiah(product?.price)}</s> | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> <s>${rupiah(product?.price)}</s> <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -457,7 +457,7 @@ class TransactionController {
           user_id: transaction.seller_id,
           title: 'Penawaran produk',
           subtitle: 'Anda menyetujui penawaran',
-          message: `${product?.product} | <s>${rupiah(product?.price)}</s> | Berhasil ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> <s>${rupiah(product?.price)}</s> <br> Berhasil ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -469,7 +469,7 @@ class TransactionController {
           user_id: transaction.buyer_id,
           title: 'Penawaran produk',
           subtitle: 'Penawaran anda tidak disetujui penjual',
-          message: `${product?.product} | ${rupiah(product?.price)} | Gagal ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Gagal ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
@@ -479,7 +479,7 @@ class TransactionController {
           user_id: transaction.seller_id,
           title: 'Penawaran produk',
           subtitle: 'Anda menolak penawaran',
-          message: `${product?.product} | ${rupiah(product?.price)} | Gagal ditawar ${rupiah(transaction.bid_price)}`,
+          message: `${product?.product} <br> ${rupiah(product?.price)} <br> Gagal ditawar ${rupiah(transaction.bid_price)}`,
           path: `transaction/${transaction.id}`,
           image: `${product_picture?.picture}`,
           createdBy: req.user.id
