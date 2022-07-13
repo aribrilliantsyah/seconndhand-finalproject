@@ -92,7 +92,7 @@ class AuthController {
     let nBiodata = await Biodata.create({
       fullname: name,
       user_id: nUser.id,
-      profile_picture: 'uploads/profile/default.png'
+      profile_picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg'
     })
 
     new Mailer({
