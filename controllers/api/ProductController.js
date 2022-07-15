@@ -41,6 +41,7 @@ class ProductController {
 				})
 			}
 		}
+		qOrder.push(['product_pictures', 'id', 'ASC'])
 
 		if(!page){
 			qRes = await Product.findAll({
@@ -117,6 +118,7 @@ class ProductController {
 					attributes: ['id', 'uuid', 'email']
 				},
 			],
+			order: [['product_pictures', 'id', 'ASC']],
 			where: {id: req.params.id},
 		});
 
