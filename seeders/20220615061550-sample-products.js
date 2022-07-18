@@ -49,7 +49,7 @@ module.exports = {
         category_id: 4,
         status: 1,
         description: "Ini merupakan Product 4",
-        seller_id: 1,
+        seller_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -60,6 +60,76 @@ module.exports = {
         status: 1,
         description: "Ini merupakan Product 5",
         seller_id: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 6",
+        price: 10000,
+        category_id: 1,
+        status: 1,
+        description: "Ini merupakan Product 6",
+        seller_id: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 7",
+        price: 10000,
+        category_id: 2,
+        status: 1,
+        description: "Ini merupakan Product 7",
+        seller_id: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 8",
+        price: 10000,
+        category_id: 3,
+        status: 1,
+        description: "Ini merupakan Product 8",
+        seller_id: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 9",
+        price: 10000,
+        category_id: 4,
+        status: 1,
+        description: "Ini merupakan Product 9",
+        seller_id: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 10",
+        price: 10000,
+        category_id: 5,
+        status: 1,
+        description: "Ini merupakan Product 10",
+        seller_id: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 11",
+        price: 10000,
+        category_id: 5,
+        status: 1,
+        description: "Ini merupakan Product 11",
+        seller_id: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        product: "Product 12",
+        price: 10000,
+        category_id: 5,
+        status: 1,
+        description: "Ini merupakan Product 12",
+        seller_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -89,6 +159,27 @@ module.exports = {
       },
       {
         product: 'Product 5'
+      },
+      {
+        product: 'Product 6'
+      },
+      {
+        product: 'Product 7'
+      },
+      {
+        product: 'Product 8'
+      },
+      {
+        product: 'Product 9'
+      },
+      {
+        product: 'Product 10'
+      },
+      {
+        product: 'Product 11'
+      },
+      {
+        product: 'Product 12'
       },
     ])
   }

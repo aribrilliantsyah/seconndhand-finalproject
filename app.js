@@ -83,5 +83,11 @@ app.use(apiVersion, WishlistRouter)
 app.use(apiVersion, TransactionRouter)
 app.use(apiVersion, CategoryRouter)
 
+app.use((error, req, res, next) => {
+  return res.json({
+    status: false,
+    message: error.message
+  })
+})
 
 module.exports = app

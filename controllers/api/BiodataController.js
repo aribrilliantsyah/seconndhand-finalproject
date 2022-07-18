@@ -5,6 +5,12 @@ const fs = require('fs')
 class BiodataController {
   //read single
   async findByUserID(req, res){
+    if(req?.params?.user_id == 'undefined'){
+      return res.status(200).json({
+        status: false,
+        message: 'Invalid User ID',
+      })
+    }
     let qRes = await Biodata.findOne({
       include: [
         {
@@ -29,6 +35,12 @@ class BiodataController {
 
   //update
   async update(req, res){
+    if(req?.params?.user_id == 'undefined'){
+      return res.status(200).json({
+        status: false,
+        message: 'Invalid User ID',
+      })
+    }
     let rules = {
       fullname: 'required',
       // profile_picture: 'required', 

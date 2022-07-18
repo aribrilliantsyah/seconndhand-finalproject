@@ -82,7 +82,7 @@ module.exports = {
       {
         'user_id': 1,
         'fullname': 'Ari Ardiansyah',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'number_phone': '083',
         'address': 'test',
         'city_id': 1,
@@ -92,7 +92,7 @@ module.exports = {
       {
         'user_id': 2,
         'fullname': 'Anang Bagus',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'address': 'test',
         'number_phone': '083',
         'city_id': 1,
@@ -102,7 +102,7 @@ module.exports = {
       {
         'user_id': 3,
         'fullname': 'Ester',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'address': 'test',
         'number_phone': '083',
         'city_id': 1,
@@ -112,7 +112,7 @@ module.exports = {
       {
         'user_id': 4,
         'fullname': 'Anisa',
-        'profile_picture': 'uploads/profile/default.png',
+        'profile_picture': 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950809/profile/default_sjylgs.jpg',
         'city_id': 1,
         'createdAt': new Date(),
         'updatedAt': new Date()
@@ -128,7 +128,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-     await queryInterface.bulkDelete('users', [
+    await queryInterface.bulkDelete('users', [
       {
         'username': 'ariardiansyah101@gmail.com',
       },
@@ -136,5 +136,26 @@ module.exports = {
         'username': 'anangbagus666@gmail.com',
       }
      ]);
+
+    await queryInterface.bulkDelete('biodata', [
+      {
+        'user_id': 1,
+      },
+      {
+        'user_id': 2,
+      },
+      {
+        'user_id': 3,
+      },
+      {
+        'user_id': 4,
+      },
+    ]);
+
+    await queryInterface.bulkDelete('cities', [
+      {
+        'city': 'Kota',
+      }
+    ]);
   }
 };
