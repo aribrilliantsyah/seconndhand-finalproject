@@ -39,6 +39,9 @@ class TransactionController {
       }
     }
     
+    let pOrder = [
+      ['product_pictures', 'id', 'ASC']
+    ]
     if(!page){
       qRes = await Transaction.findAll({
         include: [
@@ -70,6 +73,7 @@ class TransactionController {
             model: Product,
             as: 'product',   
             attributes: ['id', 'product', 'price', 'category_id', 'status'],
+            order: pOrder,
             where: qWhereProduct,
             include: [
               {
@@ -117,6 +121,7 @@ class TransactionController {
             as: 'product',   
             attributes: ['id', 'product', 'price', 'category_id', 'status'],
             where: qWhereProduct,
+            order: pOrder,
             include: [
               {
                 model: ProductPicture,
@@ -139,6 +144,10 @@ class TransactionController {
 
   //read single
   async findByID(req, res){
+    let pOrder = [
+      ['product_pictures', 'id', 'ASC']
+    ]
+    
     let qRes = await Transaction.findOne({
       include: [
         {
@@ -169,6 +178,7 @@ class TransactionController {
           model: Product,
           as: 'product',   
           attributes: ['id', 'product', 'price', 'category_id', 'status'],
+          order: pOrder,
           include: [
             {
               model: ProductPicture,
