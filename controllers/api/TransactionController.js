@@ -38,7 +38,8 @@ class TransactionController {
         })
       }
     }
-    
+    qOrder.push(['product', 'product_pictures', 'id', 'ASC'])
+
     if(!page){
       qRes = await Transaction.findAll({
         include: [
@@ -178,6 +179,7 @@ class TransactionController {
           ]
         },
       ],
+      order: [['product', 'product_pictures', 'id', 'ASC']],
       where: {id: req.params.id}
     })
 
