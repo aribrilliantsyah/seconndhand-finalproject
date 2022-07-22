@@ -15,91 +15,19 @@ module.exports = {
      await queryInterface.bulkInsert('product_pictures', [
       {
         product_id: 1,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 1,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 1,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 1,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
+        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1658497545/product/i0zolyg0uc1a3v1dcbrz.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         product_id: 2,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
+        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1658497717/product/cfigeux8edpld03wqcnw.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        product_id: 3,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 4,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 5,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 6,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 7,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 8,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 9,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 10,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 11,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        product_id: 12,
-        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1656950933/product/default_rq1im8.png',
+        product_id: 1,
+        picture: 'https://res.cloudinary.com/aribrilliantsyah/image/upload/v1658497545/product/i0zolyg0uc1a3v1dcbrz.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -120,37 +48,7 @@ module.exports = {
       },
       {
         product_id: 2
-      },
-      {
-        product_id: 3
-      },
-      {
-        product_id: 4
-      },
-      {
-        product_id: 5
-      },
-      {
-        product_id: 6
-      },
-      {
-        product_id: 7
-      },
-      {
-        product_id: 8
-      },
-      {
-        product_id: 9
-      },
-      {
-        product_id: 10
-      },
-      {
-        product_id: 11
-      },
-      {
-        product_id: 12
-      },
+      }
     ])
   }
 };
