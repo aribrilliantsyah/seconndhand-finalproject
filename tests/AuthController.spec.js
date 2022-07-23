@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const controller = require('../controllers/api/AuthController')
-const { sequelize } = require('../models')
+const { sequelize, User } = require('../models')
 const { QueryTypes } = require('sequelize')
 const mockRequest = (body = {}) => ({ body })
 const mockResponse = () => {
@@ -12,25 +12,24 @@ const mockResponse = () => {
 }
 const base = new controller();
 
-describe('AuthController Test', () => {
+describe('AuthController Unit Test', () => {
   beforeAll(async () => {
 
   })
 
   afterAll(async () => {
-    try {
-      await sequelize.query("TRUNCATE user_game, user_game_biodata, user_game_history RESTART IDENTITY;", { type: QueryTypes.RAW });
-    } catch (error) {
-      //console.log(error)
-    }
+    User.destroy({
+      where: {
+        email: "test@gmail.com"
+      }
+    })
   })
 
-  test('function register with Register success, please sign in', async () => {
+  test('function register with success', async () => {
     const req = mockRequest({
-      username: 'ariganteng',
-      email: "kurosaki.ari.kun@gmail.com",
+      name: 'test',
+      email: "test@gmail.com",
       password: 'rahasia',
-      role_id: 1,
     })
     const res = mockResponse()
     await base.register(req, res)
@@ -41,65 +40,67 @@ describe('AuthController Test', () => {
     )
   })
 
-  test('function register with Failed', async () => {
+  test('function register with failed', async () => {
     const req = mockRequest()
     const res = mockResponse()
     await base.register(req, res)
-    expect(res.status).toBeCalledWith(400)
+    expect(res.status).toBeCalledWith(422)
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        "message": "Failed", 
+        "message": "The form is not complete", 
       })
     )
   })
 
-  test('function login with Username & Password Match', async () => {
+  test('function login with success', async () => {
     const req = mockRequest({
-      username: 'ariganteng',
+      email: 'ariardiansyah101@gmail.com',
       password: 'rahasia'
     })
     const res = mockResponse()
     await base.login(req, res)
     expect(res.status).toBeCalledWith(200)
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        "message": "Username & Password Match", 
+        "message": "Email & Password Match", 
       })
     )
   })
 
-  test('function login with Failed', async () => {
+  test('function login with failed', async () => {
     const req = mockRequest()
     const res = mockResponse()
     await base.login(req, res)
-    expect(res.status).toBeCalledWith(400)
+    expect(res.status).toBeCalledWith(422)
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-        "message": "Failed", 
+        "message": "The form is not complete", 
       })
     )
   })
 
-  test('function login with Username not found', async () => {
+  test('function login with email not found', async () => {
     const req = mockRequest({
-      username: 'ariganteng123',
+      email: 'ari@gmail.com',
       password: 'rahasia'
     })
     const res = mockResponse()
     await base.login(req, res)
     expect(res.status).toBeCalledWith(200)
     expect(res.json).toBeCalledWith({
-      message: 'Username not found', 
+      message: "Email not found",
+      status: false, 
     })
   })
 
-  test('function login with Invalid password', async () => {
+  test('function login with invalid password', async () => {
     const req = mockRequest({
-      username: 'ariganteng',
+      email: 'ariardiansyah101@gmail.com',
       password: 'rahasia123'
     })
     const res = mockResponse()
     await base.login(req, res)
     expect(res.status).toBeCalledWith(200)
     expect(res.json).toBeCalledWith({
-      message: 'Invalid password', 
+      message: "Invalid password",
+      status: false, 
     })
   })
 })
